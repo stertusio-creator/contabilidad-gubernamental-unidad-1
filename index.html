@@ -3,1015 +3,1145 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contabilidad gubernamental · Unidad 1 · Profesor Sergio Tertusio</title>
-<meta name="description" content="Unidad 1 de Contabilidad gubernamental. Profesor Sergio Tertusio. Tres lecturas para comprender la planificación de un encargo.">
+<title>Contabilidad gubernamental · Unidad 1</title>
 <style>
   :root {
-    --bg: #f3eee4;
-    --bg-2: #fffdf8;
-    --ink: #1c2430;
-    --muted: #5e6872;
-    --line: #e0d5c4;
-    --accent: #0e5c4a;
-    --accent-ink: #f7fffb;
-    --brass: #8a5a12;
-    --good: #0d6b3f;
-    --bad: #8e2d2d;
-    --card: #fffdf8;
-    --header: rgba(243, 238, 228, .94);
-    --shadow: 0 12px 32px rgba(48, 36, 16, .06);
-    --fig: #f7f1e6;
-    --fig-ink: #1c2430;
+    color-scheme: light;
+    --bg: #f4f0e7;
+    --bg-2: #e8e1d4;
+    --surface: #fffcf7;
+    --ink: #1c1915;
+    --muted: #5e574c;
+    --line: #d8d0c2;
+    --accent: #8d3f22;
+    --accent-ink: #fff8f4;
+    --ok: #1b5c40;
+    --ok-bg: #e4f3eb;
+    --bad: #8d2e2a;
+    --bad-bg: #f8e8e5;
+    --shadow: 0 1px 0 rgba(28, 25, 21, 0.04);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+    --header: 4.6rem;
   }
-  html[data-theme="dark"] {
-    --bg: #10151c;
-    --bg-2: #181f29;
-    --ink: #f4efe6;
-    --muted: #b7c1cb;
-    --line: #2d3846;
-    --accent: #8ee0c4;
-    --accent-ink: #06241c;
-    --brass: #f0c27a;
-    --good: #8ee0b2;
-    --bad: #ffb1b1;
-    --card: #1a222d;
-    --header: rgba(16, 21, 28, .94);
-    --shadow: 0 12px 32px rgba(0, 0, 0, .35);
-    --fig: #222b36;
-    --fig-ink: #f4efe6;
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #12161a;
+    --bg-2: #1b232b;
+    --surface: #1c242c;
+    --ink: #f3eee6;
+    --muted: #b7aea0;
+    --line: #33404b;
+    --accent: #e39a62;
+    --accent-ink: #1c130c;
+    --ok: #9ed6b8;
+    --ok-bg: #163028;
+    --bad: #f0b0a8;
+    --bad-bg: #3a2220;
+    --shadow: none;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
   html, body { margin: 0; padding: 0; }
+  html { overflow-x: hidden; }
   body {
     background: var(--bg);
     color: var(--ink);
-    font: 1.05rem/1.6 "Segoe UI", system-ui, sans-serif;
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    min-height: 100vh;
     overflow-x: hidden;
   }
-  h1, h2, h3, .brand strong {
-    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-  }
-  header {
+  button, [role="button"] { cursor: pointer; font-family: inherit; }
+  button { min-height: 44px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  header.top {
     position: sticky;
     top: 0;
     z-index: 30;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: .6rem .75rem;
-    padding: .7rem 1rem;
-    background: var(--header);
+    gap: 8px 12px;
+    padding: 10px 16px;
+    background: var(--surface);
     border-bottom: 1px solid var(--line);
-    backdrop-filter: blur(10px);
   }
-  .brand { flex: 1 1 12rem; min-width: 0; }
-  .brand strong { display: block; font-size: clamp(1.02rem, 2.4vw, 1.35rem); }
-  .brand span { display: block; color: var(--muted); font-size: .82rem; }
-  .tools { display: flex; flex-wrap: wrap; gap: .45rem; }
-  button, .as-btn {
-    font: inherit;
-    cursor: pointer;
-    border-radius: 999px;
+  .brand { flex: 1 1 200px; min-width: 0; }
+  .brand strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .brand span { display: block; color: var(--muted); font-size: 0.84rem; line-height: 1.3; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn {
+    appearance: none;
     border: 1px solid var(--line);
-    background: var(--card);
+    background: var(--surface);
     color: var(--ink);
-    padding: .55rem .9rem;
-    min-height: 44px;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.92rem;
+    line-height: 1.2;
   }
-  button.primary {
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary {
     background: var(--accent);
     color: var(--accent-ink);
     border-color: transparent;
+    font-weight: 650;
   }
-  button.ghost { background: transparent; }
-  button:disabled { opacity: .45; cursor: not-allowed; }
-  :focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
-  main { width: min(920px, 100%); margin: 0 auto; padding: 1.25rem 1rem 3.5rem; }
+  .btn.ghost { background: transparent; }
+  main { width: min(820px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 72px; }
   .kicker {
-    color: var(--brass);
-    font-size: .82rem;
+    margin: 0 0 8px;
+    color: var(--accent);
+    font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: .12em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin: 0 0 .4rem;
   }
-  h1 { font-size: clamp(2.15rem, 6vw, 3.5rem); margin: 0 0 .6rem; }
-  h2 { font-size: clamp(1.55rem, 3.5vw, 2.15rem); margin: 0 0 .7rem; }
-  h3 { font-size: 1.2rem; margin: 1.1rem 0 .4rem; }
-  p { margin: .55rem 0; }
-  .lead { font-size: 1.12rem; max-width: 42rem; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 8px; }
+  .hero-prof {
+    font-family: var(--serif);
+    font-size: clamp(1.85rem, 4.4vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1.08;
+    margin: 0 0 10px;
+  }
+  .lede { font-size: 1.12rem; max-width: 38rem; margin: 0 0 22px; }
   .muted { color: var(--muted); }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-top: 1.25rem;
+  .grid { display: grid; gap: 14px; }
+  @media (min-width: 800px) {
+    .grid.cards { grid-template-columns: 1fr; }
   }
-  @media (min-width: 860px) {
-    .grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  .card, .panel, .why, .opt, dialog {
-    background: var(--card);
+  .card {
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: var(--shadow);
-  }
-  .card { padding: 0; text-align: left; overflow: hidden; width: 100%; }
-  .card .pad, .panel { padding: 1rem 1.05rem 1.15rem; }
-  .card h2 { font-size: 1.35rem; }
-  .figure {
-    background: var(--fig);
-    color: var(--fig-ink);
-    padding: .35rem .35rem 0;
-  }
-  .figure svg { display: block; width: min(100%, 460px); height: auto; margin: 0 auto; }
-  .cap { color: var(--muted); font-size: .78rem; margin: .35rem .2rem .7rem; }
-  ul, ol { margin: .4rem 0 .6rem; padding-left: 1.15rem; }
-  li { margin: .28rem 0; }
-  .bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; margin: .55rem 0; }
-  .bar span { display: block; height: 100%; background: var(--accent); }
-  .row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
-  .opt {
-    display: block;
-    width: 100%;
-    text-align: left;
-    box-shadow: none;
-    margin: .45rem 0;
-    border-radius: 14px;
-    padding: .8rem .95rem;
-  }
-  .opt.good { border-color: var(--good); background: color-mix(in srgb, var(--good) 16%, var(--card)); }
-  .opt.bad { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, var(--card)); }
-  .why { box-shadow: none; padding: .85rem 1rem; border-left: 4px solid var(--accent); border-radius: 0 14px 14px 0; }
-  .why.ok { border-left-color: var(--good); }
-  .why.no { border-left-color: var(--bad); }
-  .score { font-family: Georgia, Palatino, serif; font-size: clamp(2.6rem, 8vw, 4.2rem); margin: .2rem 0; letter-spacing: -0.04em; }
-  .mod {
-    display: flex;
-    gap: .8rem;
-    align-items: flex-start;
-    width: 100%;
-    text-align: left;
     border-radius: 16px;
-    margin: .45rem 0;
-    padding: .85rem 1rem;
+    box-shadow: var(--shadow);
+    padding: 16px;
+    text-align: left;
+    width: 100%;
+    color: inherit;
   }
-  .num {
-    flex: 0 0 auto;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
+  button.card { display: block; }
+  button.card:hover { border-color: var(--accent); }
+  .card h2 { font-size: 1.35rem; margin: 0 0 6px; }
+  .card p { margin: 0; }
+  .meta { margin-top: 10px; color: var(--muted); font-size: 0.88rem; }
+  .bar { height: 6px; background: var(--bg-2); border-radius: 99px; margin-top: 10px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; background: var(--accent); width: 0; }
+  .idea {
+    border-left: 3px solid var(--accent);
+    margin: 0 0 16px;
+    padding: 2px 0 2px 14px;
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    line-height: 1.35;
+  }
+  .prose p { margin: 0 0 12px; }
+  .prose h3 { font-size: 1.2rem; margin: 18px 0 8px; }
+  ul.clean, ol.clean { margin: 0 0 12px; padding-left: 1.15rem; }
+  ul.clean li, ol.clean li { margin: 0 0 6px; }
+  .pairs { display: grid; gap: 8px; margin: 0 0 14px; }
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 7.2rem) minmax(0, 1fr);
+    gap: 8px 12px;
+    align-items: baseline;
+    padding: 8px 10px;
+    background: var(--bg-2);
+    border-radius: 10px;
+  }
+  .pair b { font-variant-numeric: tabular-nums; font-weight: 700; }
+  @media (max-width: 520px) {
+    .pair { grid-template-columns: 1fr; gap: 2px; }
+  }
+  figure.fig {
+    margin: 14px 0 16px;
+    background: var(--bg-2);
+    border-radius: 14px;
+    padding: 12px 12px 8px;
+    overflow: hidden;
+  }
+  figure.fig svg { width: 100%; height: auto; display: block; max-height: 240px; }
+  figcaption { color: var(--muted); font-size: 0.78rem; line-height: 1.35; margin-top: 6px; }
+  .opts { display: grid; gap: 8px; margin: 12px 0; }
+  .opt {
+    text-align: left;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    padding: 10px 12px;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+  .opt[aria-pressed="true"] { border-color: var(--accent); }
+  .opt.good { background: var(--ok-bg); border-color: var(--ok); }
+  .opt.bad { background: var(--bad-bg); border-color: var(--bad); }
+  .opt:disabled { cursor: default; }
+  .feedback {
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 8px 0 12px;
+  }
+  .feedback.good { background: var(--ok-bg); color: var(--ink); }
+  .feedback.bad { background: var(--bad-bg); color: var(--ink); }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .navline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .sources { font-size: 0.88rem; color: var(--muted); }
+  .sources a { color: inherit; }
+  .score {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 7vw, 3.4rem);
+    margin: 8px 0;
+    line-height: 1;
+  }
+  .review { display: grid; gap: 8px; margin-top: 16px; }
+  .review article {
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+    font-size: 0.95rem;
+  }
+  .modal[hidden] { display: none; }
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(18, 16, 14, 0.48);
     display: grid;
     place-items: center;
-    background: var(--bg);
-    border: 1px solid var(--line);
-    font-weight: 700;
+    padding: 16px;
   }
-  .done .num { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
-  dialog { border: 1px solid var(--line); color: var(--ink); padding: 1.2rem; max-width: min(440px, calc(100% - 2rem)); }
-  dialog::backdrop { background: rgba(10, 12, 16, .55); }
-  dialog h2 { font-size: 1.45rem; }
-  .split { display: grid; gap: .75rem; }
-  @media (min-width: 720px) {
-    .split { grid-template-columns: 1fr 1fr; }
-  }
-  .mini {
-    background: var(--bg);
-    border-radius: 12px;
-    padding: .7rem .8rem;
+  .dialog {
+    width: min(440px, 100%);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 16px;
+    padding: 18px;
     border: 1px solid var(--line);
   }
-  .mini strong { display: block; margin-bottom: .2rem; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  .dialog h2 { margin: 0 0 8px; font-size: 1.45rem; }
+  .dialog p { margin: 0 0 14px; }
+  .cover-svg { margin: 8px 0 14px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
 </style>
 </head>
 <body>
-<header>
+<header class="top">
   <div class="brand">
     <strong>Profesor Sergio Tertusio</strong>
     <span>Contabilidad gubernamental</span>
   </div>
   <div class="tools">
-    <button type="button" class="ghost" id="menu">Menú</button>
-    <button type="button" class="ghost" id="theme" aria-pressed="false">Modo claro</button>
-    <button type="button" class="ghost" id="reset">Reiniciar</button>
+    <button class="btn" type="button" id="btn-menu">Menú</button>
+    <button class="btn" type="button" id="btn-theme">Modo oscuro</button>
+    <button class="btn ghost" type="button" id="btn-reset">Reiniciar</button>
   </div>
 </header>
 <main id="app"></main>
-<dialog id="dlg">
-  <h2>Reiniciar el avance</h2>
-  <p>Se borra el avance de las tres lecturas en este navegador. El modo claro u oscuro se conserva.</p>
-  <div class="row">
-    <button type="button" id="dlg-no">Cancelar</button>
-    <button type="button" class="primary" id="dlg-yes">Borrar avance</button>
+<div class="modal" id="modal" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">¿Reiniciar el avance?</h2>
+    <p>Se borra el progreso de las tres lecturas: módulos, actividades y cuestionarios. El modo claro u oscuro se conserva.</p>
+    <div class="navline">
+      <button class="btn" type="button" id="cancel-reset">Cancelar</button>
+      <button class="btn primary" type="button" id="confirm-reset">Borrar avance</button>
+    </div>
   </div>
-</dialog>
+</div>
 <script>
-const KEY = "cg-u1-progreso";
-const THEME = "cg-u1-tema";
+const THEME_KEY = "cg-u1-theme";
+const storeKey = (id) => "cg-u1-" + id;
 
-const FIGS = {
-normas: `<svg viewBox="0 0 300 200" role="img" aria-label="Seis NIA que orientan la planificación: NIA 200, 210, 220, 300, 315 y 320.">
-  <rect x="6" y="8" width="288" height="184" rx="16" fill="currentColor" opacity=".06"/>
-  <g font-family="Georgia, Palatino, serif" fill="currentColor">
-    <g><rect x="18" y="22" width="126" height="48" rx="10" fill="#0e5c4a"/><text x="30" y="44" fill="#f7fffb" font-size="15">NIA 200</text><text x="30" y="60" fill="#f7fffb" font-size="11">Objetivo</text></g>
-    <g><rect x="156" y="22" width="126" height="48" rx="10" fill="#0e5c4a"/><text x="168" y="44" fill="#f7fffb" font-size="15">NIA 210</text><text x="168" y="60" fill="#f7fffb" font-size="11">Términos</text></g>
-    <g><rect x="18" y="78" width="126" height="48" rx="10" fill="#8a5a12"/><text x="30" y="100" fill="#fffdf8" font-size="15">NIA 220</text><text x="30" y="116" fill="#fffdf8" font-size="11">Calidad</text></g>
-    <g><rect x="156" y="78" width="126" height="48" rx="10" fill="#8a5a12"/><text x="168" y="100" fill="#fffdf8" font-size="15">NIA 300</text><text x="168" y="116" fill="#fffdf8" font-size="11">Plan</text></g>
-    <g><rect x="18" y="134" width="126" height="46" rx="10" fill="#1c2430"/><text x="30" y="155" fill="#f7fffb" font-size="15">NIA 315</text><text x="30" y="170" fill="#f7fffb" font-size="11">Riesgos</text></g>
-    <g><rect x="156" y="134" width="126" height="46" rx="10" fill="#1c2430"/><text x="168" y="155" fill="#f7fffb" font-size="15">NIA 320</text><text x="168" y="170" fill="#f7fffb" font-size="11">Materialidad</text></g>
-  </g>
-</svg>`,
-enfasis: `<svg viewBox="0 0 300 200" role="img" aria-label="El riesgo y la materialidad orientan el énfasis de la revisión.">
-  <rect x="18" y="28" width="110" height="64" rx="12" fill="#0e5c4a"/>
-  <rect x="18" y="108" width="110" height="64" rx="12" fill="#8a5a12"/>
-  <text x="32" y="66" fill="#f7fffb" font-size="16" font-family="Georgia, serif">Riesgo</text>
-  <text x="32" y="146" fill="#fffdf8" font-size="15" font-family="Georgia, serif">Materialidad</text>
-  <path d="M140 96 H188" stroke="currentColor" stroke-width="3" fill="none"/>
-  <path d="M180 86 l16 10 -16 10" fill="currentColor"/>
-  <rect x="196" y="58" width="86" height="76" rx="12" fill="currentColor" opacity=".1" stroke="currentColor"/>
-  <text x="210" y="92" fill="currentColor" font-size="14" font-family="Georgia, serif">Énfasis</text>
-  <text x="210" y="112" fill="currentColor" font-size="14" font-family="Georgia, serif">en áreas</text>
-</svg>`,
-carta: `<svg viewBox="0 0 300 200" role="img" aria-label="Tres condiciones previas: marco, confirmación de la dirección y acceso a la información.">
-  <rect x="24" y="18" width="252" height="50" rx="10" fill="#0e5c4a"/>
-  <rect x="24" y="76" width="252" height="50" rx="10" fill="#8a5a12"/>
-  <rect x="24" y="134" width="252" height="50" rx="10" fill="#1c2430"/>
-  <text x="40" y="48" fill="#f7fffb" font-size="15" font-family="Georgia, serif">Marco aceptable</text>
-  <text x="40" y="106" fill="#fffdf8" font-size="15" font-family="Georgia, serif">Responsabilidad de la dirección</text>
-  <text x="40" y="164" fill="#f7fffb" font-size="15" font-family="Georgia, serif">Acceso a información y personas</text>
-</svg>`,
-planes: `<svg viewBox="0 0 300 200" role="img" aria-label="Dos documentos ligados: la estrategia global y el plan detallado.">
-  <rect x="16" y="28" width="120" height="144" rx="12" fill="#0e5c4a"/>
-  <rect x="164" y="28" width="120" height="144" rx="12" fill="#8a5a12"/>
-  <text x="30" y="58" fill="#f7fffb" font-size="15" font-family="Georgia, serif">Estrategia</text>
-  <text x="30" y="84" fill="#f7fffb" font-size="12" font-family="Georgia, serif">Alcance</text>
-  <text x="30" y="104" fill="#f7fffb" font-size="12" font-family="Georgia, serif">Objetivos</text>
-  <text x="30" y="124" fill="#f7fffb" font-size="12" font-family="Georgia, serif">Procesos</text>
-  <text x="178" y="58" fill="#fffdf8" font-size="15" font-family="Georgia, serif">Detalle</text>
-  <text x="178" y="84" fill="#fffdf8" font-size="12" font-family="Georgia, serif">Naturaleza</text>
-  <text x="178" y="104" fill="#fffdf8" font-size="12" font-family="Georgia, serif">Pruebas</text>
-  <text x="178" y="124" fill="#fffdf8" font-size="12" font-family="Georgia, serif">Programas</text>
-  <path d="M136 100 H164" stroke="currentColor" stroke-width="3"/>
-</svg>`,
-coso: `<svg viewBox="0 0 300 210" role="img" aria-label="Cinco componentes del control interno según COSO 2013.">
-  <g font-family="Georgia, serif" font-size="13" fill="#f7fffb">
-    <rect x="20" y="14" width="260" height="32" rx="8" fill="#0e5c4a"/><text x="32" y="35">Ambiente de control</text>
-    <rect x="20" y="52" width="260" height="32" rx="8" fill="#146e58"/><text x="32" y="73">Evaluación de riesgos</text>
-    <rect x="20" y="90" width="260" height="32" rx="8" fill="#8a5a12"/><text x="32" y="111">Actividades de control</text>
-    <rect x="20" y="128" width="260" height="32" rx="8" fill="#a56b18"/><text x="32" y="149">Información y comunicación</text>
-    <rect x="20" y="166" width="260" height="32" rx="8" fill="#1c2430"/><text x="32" y="187">Supervisión</text>
-  </g>
-</svg>`,
-tres: `<svg viewBox="0 0 300 200" role="img" aria-label="El riesgo de incorrección material une el riesgo inherente y el de control. El de detección se suma al riesgo de un informe incorrecto.">
-  <rect x="12" y="18" width="86" height="70" rx="10" fill="#0e5c4a"/>
-  <rect x="107" y="18" width="86" height="70" rx="10" fill="#8a5a12"/>
-  <rect x="202" y="18" width="86" height="70" rx="10" fill="#1c2430"/>
-  <text x="22" y="58" fill="#f7fffb" font-size="12" font-family="Georgia, serif">Inherente</text>
-  <text x="122" y="58" fill="#fffdf8" font-size="12" font-family="Georgia, serif">Control</text>
-  <text x="214" y="58" fill="#f7fffb" font-size="12" font-family="Georgia, serif">Detección</text>
-  <path d="M20 108 h168 v18 h-168 z" fill="currentColor" opacity=".12"/>
-  <text x="28" y="121" fill="currentColor" font-size="11" font-family="Georgia, serif">Incorrección material</text>
-  <rect x="20" y="146" width="260" height="36" rx="10" fill="currentColor" opacity=".12"/>
-  <text x="36" y="168" fill="currentColor" font-size="12" font-family="Georgia, serif">Informe incorrecto: las tres piezas</text>
-</svg>`,
-baremo: `<svg viewBox="0 0 300 200" role="img" aria-label="El nivel de riesgo es impacto por probabilidad. De 1 a 8 es bajo, de 9 a 17 medio y de 18 a 25 alto.">
-  <text x="24" y="36" fill="currentColor" font-size="15" font-family="Georgia, serif">Impacto × probabilidad</text>
-  <text x="24" y="58" fill="currentColor" font-size="12" font-family="Georgia, serif">Máximo 5 × 5 = 25</text>
-  <rect x="20" y="78" width="260" height="28" rx="8" fill="#1f8a4c"/>
-  <rect x="20" y="114" width="260" height="28" rx="8" fill="#c8922a"/>
-  <rect x="20" y="150" width="260" height="28" rx="8" fill="#c2453a"/>
-  <text x="32" y="97" fill="#fff" font-size="13" font-family="Georgia, serif">1 a 8 · bajo</text>
-  <text x="32" y="133" fill="#1c2430" font-size="13" font-family="Georgia, serif">9 a 17 · medio</text>
-  <text x="32" y="169" fill="#fff" font-size="13" font-family="Georgia, serif">18 a 25 · alto</text>
-</svg>`,
-lazo: `<svg viewBox="0 0 300 200" role="img" aria-label="La estrategia y el plan detallado se influyen. El alcance también marca el periodo revisado.">
-  <rect x="18" y="36" width="110" height="54" rx="12" fill="#0e5c4a"/>
-  <rect x="172" y="36" width="110" height="54" rx="12" fill="#8a5a12"/>
-  <text x="32" y="68" fill="#f7fffb" font-size="14" font-family="Georgia, serif">Estrategia</text>
-  <text x="196" y="68" fill="#fffdf8" font-size="14" font-family="Georgia, serif">Detalle</text>
-  <path d="M128 52 H172" stroke="currentColor" stroke-width="2.5" fill="none"/>
-  <path d="M172 74 H128" stroke="currentColor" stroke-width="2.5" fill="none"/>
-  <text x="18" y="130" fill="currentColor" font-size="13" font-family="Georgia, serif">Un cambio en una mueve la otra.</text>
-  <rect x="18" y="146" width="264" height="36" rx="10" fill="currentColor" opacity=".1"/>
-  <text x="30" y="169" fill="currentColor" font-size="13" font-family="Georgia, serif">Alcance: también el periodo</text>
-</svg>`,
-prog: `<svg viewBox="0 0 300 200" role="img" aria-label="El programa de trabajo ordena los procedimientos. Es el producto final del plan detallado.">
-  <rect x="48" y="16" width="204" height="168" rx="14" fill="currentColor" opacity=".08" stroke="currentColor"/>
-  <text x="66" y="46" fill="currentColor" font-size="16" font-family="Georgia, serif">Programa</text>
-  <g fill="none" stroke="#0e5c4a" stroke-width="3">
-    <path d="M70 70 h16 M70 102 h16 M70 134 h16 M70 166 h16"/>
-    <path d="M72 74 l4 4 8 -8 M72 106 l4 4 8 -8"/>
-  </g>
-  <g stroke="currentColor" stroke-width="3" opacity=".45">
-    <path d="M100 78 H220 M100 110 H220 M100 142 H210 M100 174 H190"/>
-  </g>
-</svg>`,
-carpeta: `<svg viewBox="0 0 300 200" role="img" aria-label="Carpeta del memorándum, con una parte de estrategia y otra de plan detallado.">
-  <path d="M28 48 h90 l16 16 H272 v112 H28 Z" fill="#8a5a12"/>
-  <path d="M28 64 h244 v112 H28 Z" fill="#0e5c4a"/>
-  <text x="46" y="98" fill="#f7fffb" font-size="18" font-family="Georgia, serif">Memorándum</text>
-  <text x="46" y="126" fill="#f7fffb" font-size="13" font-family="Georgia, serif">I · Estrategia</text>
-  <text x="46" y="148" fill="#f7fffb" font-size="13" font-family="Georgia, serif">II · Plan detallado</text>
-</svg>`,
-factores: `<svg viewBox="0 0 300 210" role="img" aria-label="La extensión de los papeles depende de la complejidad, los procedimientos, los riesgos, la evidencia, las excepciones y el método.">
-  <circle cx="150" cy="108" r="36" fill="#0e5c4a"/>
-  <text x="124" y="112" fill="#f7fffb" font-size="12" font-family="Georgia, serif">Papeles</text>
-  <g fill="currentColor" font-size="11" font-family="Georgia, serif">
-    <text x="16" y="28">Complejidad</text>
-    <text x="188" y="28">Procedimientos</text>
-    <text x="16" y="196">Excepciones</text>
-    <text x="200" y="196">Método</text>
-    <text x="8" y="112">Riesgos</text>
-    <text x="214" y="112">Evidencia</text>
-  </g>
-</svg>`,
-seis: `<svg viewBox="0 0 300 200" role="img" aria-label="Seis fuentes de riesgo: factores externos, naturaleza de la entidad, políticas contables, objetivos, desempeño y control interno.">
-  <g font-family="Georgia, serif" font-size="12" fill="#f7fffb">
-    <rect x="14" y="16" width="130" height="48" rx="10" fill="#0e5c4a"/><text x="26" y="44">Factores externos</text>
-    <rect x="156" y="16" width="130" height="48" rx="10" fill="#0e5c4a"/><text x="168" y="44">Naturaleza</text>
-    <rect x="14" y="76" width="130" height="48" rx="10" fill="#8a5a12"/><text x="26" y="104">Políticas</text>
-    <rect x="156" y="76" width="130" height="48" rx="10" fill="#8a5a12"/><text x="168" y="104">Objetivos</text>
-    <rect x="14" y="136" width="130" height="48" rx="10" fill="#1c2430"/><text x="26" y="164">Desempeño</text>
-    <rect x="156" y="136" width="130" height="48" rx="10" fill="#1c2430"/><text x="168" y="164">Control interno</text>
-  </g>
-</svg>`,
-capas: `<svg viewBox="0 0 300 200" role="img" aria-label="Tres capas del modelo: materialidad global 5 por ciento de la utilidad antes de impuestos, materialidad de planificación 2,5 por ciento, y ajustes al 5 por ciento de la de planificación.">
-  <rect x="20" y="28" width="260" height="40" rx="8" fill="#0e5c4a"/>
-  <rect x="40" y="80" width="220" height="40" rx="8" fill="#8a5a12"/>
-  <rect x="70" y="132" width="160" height="40" rx="8" fill="#1c2430"/>
-  <text x="32" y="53" fill="#f7fffb" font-size="13" font-family="Georgia, serif">Global · 5% de la UAI</text>
-  <text x="52" y="105" fill="#fffdf8" font-size="13" font-family="Georgia, serif">Plan · 2,5% de la UAI</text>
-  <text x="82" y="157" fill="#f7fffb" font-size="13" font-family="Georgia, serif">Ajustes · 5% del plan</text>
-</svg>`
+const SVG = {
+  l1cover: `<svg viewBox="0 0 640 220" role="img" aria-label="Libro de registro con líneas de asiento">
+    <rect x="70" y="28" width="220" height="164" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M90 28 v164" stroke="currentColor" stroke-width="3" opacity="0.45"/>
+    <path d="M118 62 h140 M118 86 h140 M118 110 h100 M118 134 h120" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+    <rect x="330" y="48" width="230" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <rect x="330" y="92" width="190" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <rect x="330" y="136" width="210" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  </svg>`,
+  l1m1: `<svg viewBox="0 0 640 200" role="img" aria-label="De un hecho económico hacia estados financieros">
+    <circle cx="90" cy="100" r="42" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M150 100 h70" stroke="currentColor" stroke-width="3"/>
+    <path d="M210 90 l16 10 -16 10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="240" y="58" width="150" height="84" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M408 100 h70" stroke="currentColor" stroke-width="3"/>
+    <path d="M468 90 l16 10 -16 10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="500" y="40" width="100" height="120" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M520 72 h60 M520 96 h60 M520 120 h40" stroke="currentColor" stroke-width="2"/>
+  </svg>`,
+  l1m3: `<svg viewBox="0 0 640 220" role="img" aria-label="Cinco niveles del código, de uno a ocho dígitos">
+    <g fill="none" stroke="currentColor" stroke-width="3">
+      <rect x="40" y="24" width="70" height="32" rx="6"/>
+      <rect x="40" y="68" width="130" height="32" rx="6"/>
+      <rect x="40" y="112" width="230" height="32" rx="6"/>
+      <rect x="40" y="156" width="340" height="32" rx="6"/>
+      <rect x="400" y="156" width="200" height="32" rx="6"/>
+    </g>
+  </svg>`,
+  l1m4: `<svg viewBox="0 0 640 200" role="img" aria-label="Dos columnas, débito y crédito">
+    <path d="M320 24 v152" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <rect x="70" y="36" width="180" height="128" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="390" y="36" width="180" height="128" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M100 78 h120 M100 108 h90 M100 138 h110" stroke="currentColor" stroke-width="2"/>
+    <path d="M420 78 h120 M420 108 h90 M420 138 h110" stroke="currentColor" stroke-width="2"/>
+  </svg>`,
+  l2cover: `<svg viewBox="0 0 640 220" role="img" aria-label="Dos bloques del cuadro de cuentas">
+    <rect x="40" y="36" width="260" height="148" rx="12" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="340" y="36" width="260" height="148" rx="12" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M70 78 h200 M70 110 h160 M70 142 h180" stroke="currentColor" stroke-width="2"/>
+    <path d="M370 78 h200 M370 110 h150 M370 142 h170" stroke="currentColor" stroke-width="2"/>
+  </svg>`,
+  l2m2: `<svg viewBox="0 0 640 200" role="img" aria-label="Orden de liquidez: corriente y no corriente">
+    <rect x="36" y="70" width="120" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="180" y="58" width="120" height="82" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="324" y="46" width="120" height="94" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="468" y="34" width="136" height="106" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+  </svg>`,
+  l2m3: `<svg viewBox="0 0 640 200" role="img" aria-label="Ingresos y gastos junto a la ejecución presupuestaria">
+    <rect x="40" y="30" width="160" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="40" y="110" width="160" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M210 60 h70 M210 140 h70" stroke="currentColor" stroke-width="3"/>
+    <path d="M270 50 l16 10 -16 10 M270 130 l16 10 -16 10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="310" y="48" width="270" height="104" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M340 92 h210" stroke="currentColor" stroke-width="2"/>
+  </svg>`,
+  l3cover: `<svg viewBox="0 0 640 220" role="img" aria-label="Capas de una clase hacia la subcuenta">
+    <rect x="150" y="24" width="340" height="32" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="130" y="68" width="380" height="32" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="100" y="112" width="440" height="32" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="70" y="156" width="500" height="32" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
+  </svg>`,
+  l3m1: `<svg viewBox="0 0 640 180" role="img" aria-label="Plazo de doce meses que separa corriente y no corriente">
+    <path d="M40 90 h560" stroke="currentColor" stroke-width="3"/>
+    <path d="M40 78 v24 M320 70 v40 M600 78 v24" stroke="currentColor" stroke-width="3"/>
+    <circle cx="180" cy="90" r="10" fill="currentColor"/>
+    <circle cx="470" cy="90" r="10" fill="none" stroke="currentColor" stroke-width="3"/>
+  </svg>`,
+  l3m2: `<svg viewBox="0 0 640 200" role="img" aria-label="Activos y pasivos y la situación neta">
+    <path d="M320 30 v20" stroke="currentColor" stroke-width="3"/>
+    <path d="M180 50 h280" stroke="currentColor" stroke-width="3"/>
+    <path d="M180 50 v24 M460 50 v24" stroke="currentColor" stroke-width="3"/>
+    <rect x="110" y="74" width="140" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="390" y="96" width="140" height="68" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+  </svg>`,
+  l3m4: `<svg viewBox="0 0 640 200" role="img" aria-label="Dos registros unidos por un asiento simultáneo">
+    <rect x="40" y="36" width="200" height="128" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="400" y="36" width="200" height="128" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M250 100 h140" stroke="currentColor" stroke-width="3"/>
+    <path d="M250 88 l-14 12 14 12 M390 88 l14 12 -14 12" fill="none" stroke="currentColor" stroke-width="3"/>
+    <path d="M70 78 h140 M70 104 h110 M70 130 h120 M430 78 h140 M430 104 h110 M430 130 h120" stroke="currentColor" stroke-width="2"/>
+  </svg>`
 };
 
-const R = {
-l1: {
-  title: "Normas que orientan la planificación",
-  kicker: "Lectura 1",
-  cover: "normas",
-  blurb: "Los números de la imagen son NIA. Con ellas se decide el énfasis, los términos y la calidad del trabajo.",
-  intro: "Planificar importa porque ahí se conocen las características de la empresa o del área. Las NIA nacieron para estados financieros, pero la lectura indica que sus preceptos sirven para definir la naturaleza, el alcance y el tipo de pruebas en otros encargos. Quien los ejecute debe cumplir, además, las obligaciones legales, reglamentarias o profesionales que correspondan.",
-  modules: [
-    {
-      title: "El mapa de las normas",
-      fig: "enfasis",
-      paras: [
-        "El riesgo y la importancia relativa son cruciales: dan la base para decidir el énfasis de la revisión en unas áreas y no tratarlas todas por igual.",
-        "El IAASB reúne, para esta etapa, seis NIA. Conviene reconocer para qué está cada una, no memorizar el índice."
-      ],
-      list: [
-        "NIA 200. Objetivos globales del auditor independiente y realización del trabajo conforme a las NIA.",
-        "NIA 210. Acuerdo de los términos del encargo.",
-        "NIA 220. Control de calidad del trabajo sobre estados financieros.",
-        "NIA 300. Planificación de ese trabajo.",
-        "NIA 315. Identificación y valoración de los riesgos de incorrección material, mediante el conocimiento de la entidad y de su entorno.",
-        "NIA 320. Importancia relativa o materialidad, en la planificación y en la ejecución."
-      ],
-      act: {
-        q: "Según la lectura, ¿para qué sirven el riesgo y la materialidad en esta etapa?",
-        options: [
-          "Para decidir el énfasis de la revisión en determinadas áreas.",
-          "Para que la dirección deje de responder por las cifras.",
-          "Para sustituir el marco de información financiera."
-        ],
-        ok: 0,
-        why: "La lectura dice que esos dos elementos generan la base para decidir el énfasis. No trasladan la responsabilidad de la información ni reemplazan el marco."
-      }
-    },
-    {
-      title: "Objetivo, responsabilidades y términos",
-      fig: "carta",
-      paras: [
-        "La NIA 200, citada por la lectura (IAASB, 2016), fija el objetivo: aumentar el grado de confianza de los usuarios en los estados financieros. Eso se logra con una opinión sobre si fueron preparados, en todos los aspectos materiales, conforme al marco aplicable.",
-        "En otros encargos, el objetivo también es generar confianza en resultados que servirán para decidir o para adecuar procesos, con recomendaciones y mejora continua.",
-        "La información financiera, o los procesos evaluados, son de la gerencia. El informe debe dejar claro que el trabajo consiste en pruebas y procedimientos, y que las aseveraciones las sostiene quien las ejecuta. La norma parte de que la dirección y, cuando proceda, los responsables del gobierno han reconocido esa responsabilidad."
-      ],
-      listTitle: "Durante el trabajo hay que tener presentes",
-      list: [
-        "Principios: integridad, objetividad, competencia y diligencia, confidencialidad y comportamiento profesional.",
-        "Escepticismo profesional y juicio profesional.",
-        "Evidencia suficiente y adecuada.",
-        "Riesgos de incorrección material y de detección. El trabajo se enfoca a riesgos."
-      ],
-      after: "La NIA 210 pide acordar los términos con la dirección y con el gobierno. Antes de empezar, ambas partes deben comprender el trabajo y cerrar tres condiciones: un marco conocido y aceptable; la confirmación de que la dirección responde por la preparación de la información y por el control interno; y el compromiso de dar acceso a información relevante, registros, documentos y cálculos, a información adicional, y a las personas.",
-      list2Title: "La carta de encargo incluye",
-      list2: [
-        "Objetivo y alcance.",
-        "Responsabilidades del auditor y de la dirección.",
-        "Marco de referencia.",
-        "Estructura esperada del informe, y la advertencia de que el contenido o la estructura pueden diferir."
-      ],
-      end: "Si la dirección impone no revisar un área y, aun así, pide el informe como si esa limitación no existiera, el encargo no se acepta: sería una limitación de alcance. Si no da las condiciones previas, hay que evaluar si se acepta.",
-      act: {
-        q: "La dirección pide dejar fuera un almacén y emitir el informe sin mencionar ese hueco. ¿Qué corresponde, según la NIA 210?",
-        options: [
-          "No aceptar el encargo, porque el alcance quedaría limitado.",
-          "Aceptar, si la carta omite el objetivo.",
-          "Aceptar y dejar la responsabilidad de las cifras en el auditor."
-        ],
-        ok: 0,
-        why: "La lectura es clara: no se trabaja con una limitación de alcance impuesta desde el inicio. Además, las aseveraciones siguen siendo de la dirección, no del auditor."
-      }
-    },
-    {
-      title: "Calidad, estrategia y plan",
-      fig: "planes",
-      paras: [
-        "La NIA 220 exige estándares de calidad y el Código de Ética del IESBA, además de lo que dispongan las federaciones de cada país. Quien lidera verifica que el equipo aplique las normas en las pruebas, los procedimientos y la documentación, guardada en el repositorio de papeles de trabajo. Así se miran las amenazas y las salvaguardas éticas. El equipo debe tener competencia técnica y conductual: integridad, objetividad y profesionalismo.",
-        "La NIA 300 entiende la planificación como una estrategia global y, después, un plan detallado. Sirve para ver las áreas importantes, anticipar problemas, organizar el trabajo con eficacia y eficiencia, elegir personas capaces frente a los riesgos previstos, y supervisar y revisar su trabajo."
-      ],
-      listTitle: "Qué mira cada documento",
-      list: [
-        "Estrategia: alcance; objetivos e informes; factores significativos para la administración, según el juicio profesional; análisis preliminares y su vínculo con otros trabajos; entendimiento de los procesos.",
-        "Plan detallado: naturaleza del trabajo; áreas con materialidad; extensión de los procedimientos de valoración del riesgo; pruebas y procedimientos; programas de trabajo."
-      ],
-      end: "Ambos pueden actualizarse cuando haga falta, explicando las causas. Son una guía, no un guion rígido. El contenido es responsabilidad del auditor, aunque puede comentar partes con la dirección para entender mejor procesos concretos.",
-      act: {
-        q: "El plan ya está escrito y aparece un hecho nuevo. ¿Qué permite la NIA 300?",
-        options: [
-          "Modificar la estrategia o el plan, y explicar las causas.",
-          "Dejarlo congelado, aunque las circunstancias cambien.",
-          "Entregar la redacción del plan a la dirección."
-        ],
-        ok: 0,
-        why: "La lectura dice que la planificación se actualiza si hace falta, con las causas a la vista. Sigue siendo responsabilidad de quien ejecuta el encargo, no de la dirección."
-      }
-    },
-    {
-      title: "Riesgos, control interno y materialidad",
-      fig: "coso",
-      paras: [
-        "La NIA 315 pide identificar y valorar riesgos de incorrección material en los estados financieros, por fraude o por error, conociendo la entidad, su entorno y su control interno. En otros encargos, también los factores internos y externos que limitan las operaciones.",
-        "Eso exige ver actividades, complejidad, clientes y proveedores, cantidad de empleados, ubicación de oficinas e instalaciones, infraestructura tecnológica y sistemas administrativos y contables. Los procedimientos que resume la lectura son indagaciones, procedimientos analíticos, y observación e inspección."
-      ],
-      listTitle: "La NIA 315 sugiere conocer",
-      list: [
-        "Factores sectoriales, normativos y otros externos.",
-        "La naturaleza de la entidad: operaciones, gobierno, propiedad e inversiones.",
-        "Cómo se estructura y cómo se financia.",
-        "Transacciones, saldos e información a revelar.",
-        "Si las políticas contables son adecuadas.",
-        "Objetivos, estrategias y riesgos de negocio que puedan causar incorrecciones materiales.",
-        "Cómo se mide y se revisa el resultado financiero."
-      ],
-      after: "El control interno se lee con COSO (2013). La lectura describe cinco componentes: ambiente de control (estructura, procedimientos, estilo de gerencia y conducta ética); evaluación de riesgos (factores, respuesta y planes para mitigar, aceptar o transferir); actividades de control (conciliaciones, tomas físicas, inspecciones, listas de chequeo y verificación de saldos); información y comunicación (que la directiva y el personal conozcan el desempeño para corregir); y supervisión (para que la primera y la segunda línea rindan cuentas y apliquen correctivos).",
-      end: "Con eso se ven riesgos, controles, transacciones y saldos. Se valoran el riesgo inherente y el de control para decidir la naturaleza del trabajo. Los indicios de fraude se reconocen para decidir el alcance. La NIA 320 aplica la materialidad en la planificación y en la ejecución: es el efecto de incorrecciones, errores u omisiones, solos o juntos, que influye en las decisiones. Una partida es material si pesa en las cifras o si la operación es compleja o de alta incidencia. En construcción, la lectura señala costos de servicios e inventarios de insumos. En una empresa comercial, inventarios, cuentas por cobrar, efectivo y pasivos con proveedores. La materialidad también marca el monto desde el cual se proponen ajustes. Al cierre, la lectura recuerda la división de papeles: quien ejecuta el encargo planifica y hace el trabajo; la dirección responde por la información.",
-      act: {
-        q: "En una empresa de construcción, ¿qué partidas trata la lectura como de importancia relativa?",
-        options: [
-          "Los costos de servicios y los inventarios de insumos.",
-          "Solo el nombre comercial, sin mirar las cifras.",
-          "Cualquier partida pequeña, porque la materialidad es absoluta."
-        ],
-        ok: 0,
-        why: "Ese es el ejemplo de la NIA 320 en la lectura. La materialidad mira el efecto sobre las decisiones: peso en las cifras, complejidad o incidencia. No es un monto absoluto ni un asunto de nombre comercial."
-      }
-    }
-  ],
-  quiz: [
-    { q: "La NIA 200 declara que el objetivo es aumentar el grado de confianza de los usuarios en los estados financieros.", options: ["Verdadero", "Falso"], ok: 0, why: "Así lo cita la lectura. Se logra con una opinión sobre si fueron preparados, en los aspectos materiales, conforme al marco aplicable." },
-    { q: "¿Quién responde por la información financiera, según la NIA 200 en esta lectura?", options: ["El auditor, porque emite la opinión.", "La dirección y, cuando proceda, los responsables del gobierno.", "Cualquier lector de los estados financieros."], ok: 1, why: "El encargo parte de que ellos reconocen esa responsabilidad. El auditor aplica pruebas y procedimientos; las aseveraciones son de la gerencia." },
-    { q: "Si la dirección pide excluir un área y que el informe ignore esa exclusión, conviene aceptar el encargo.", options: ["Verdadero", "Falso"], ok: 1, why: "No se acepta. La NIA 210 trata ese pedido como una limitación de alcance." },
-    { q: "¿Qué debe llevar la carta de encargo?", options: ["La utilidad exacta del año siguiente.", "Objetivo, alcance, responsabilidades, marco y forma prevista del informe.", "La lista de personas que serán despedidas."], ok: 1, why: "La NIA 210 enumera esos puntos y, además, la posibilidad de que el informe difiera de lo esperado." },
-    { q: "Según la NIA 220, ¿qué le toca a quien lidera el equipo?", options: ["Verificar normas, papeles de trabajo, ética y competencia del equipo.", "Redactar él solo los estados financieros.", "Dejar de lado el código del IESBA."], ok: 0, why: "La calidad incluye el código del IESBA y las federaciones locales, la documentación en el repositorio y la competencia técnica y conductual." },
-    { q: "Una vez escrita, la planificación no puede cambiarse.", options: ["Verdadero", "Falso"], ok: 1, why: "La NIA 300 permite actualizar la estrategia y el plan, explicando las causas. Es una guía, no un guion rígido." },
-    { q: "¿Cuál es un beneficio de planificar, según la NIA 300?", options: ["Elegir al equipo según los riesgos previstos y poder supervisar su trabajo.", "Eliminar todo fraude antes de empezar.", "Encargar a la dirección el diseño de las pruebas."], ok: 0, why: "También ayuda a ver áreas importantes, a resolver problemas a tiempo y a organizar el trabajo. No dice que el fraude desaparezca ni que la dirección diseñe las pruebas." },
-    { q: "Para valorar riesgos, la NIA 315 pide conocer…", options: ["Solo el nombre comercial.", "La entidad, su entorno y el control interno, por fraude o error.", "Únicamente el saldo de caja del primer día."], ok: 1, why: "Ese es el objetivo de la norma. La lectura muestra indagaciones, procedimientos analíticos y observación e inspección." },
-    { q: "COSO (2013), como lo resume la lectura, incluye ambiente de control, evaluación de riesgos, actividades de control, información y comunicación, y supervisión.", options: ["Verdadero", "Falso"], ok: 0, why: "Esos son los cinco componentes que la lectura describe." },
-    { q: "¿Cuándo una partida tiene importancia relativa?", options: ["Solo si aparece en la portada del informe.", "Si sus incorrecciones podrían influir en las decisiones, por su peso, su complejidad o su incidencia.", "Si corresponde al primer mes, sea cual sea el monto."], ok: 1, why: "La NIA 320 mira efectos de errores u omisiones, individuales o en conjunto. La lectura ilustra con costos e insumos en construcción, y con inventarios, cuentas por cobrar, efectivo y proveedores en una empresa comercial." }
-  ]
-},
-l2: {
-  title: "Estrategia y plan detallado",
-  kicker: "Lectura 2",
-  cover: "planes",
-  blurb: "Cómo se nombra el trabajo, cómo se valora el riesgo y cómo se pasa de la estrategia al detalle.",
-  intro: "Esta etapa reduce el riesgo del trabajo. Ahí se conoce la empresa y su entorno, sus procesos y las áreas de mayor importancia relativa, y se identifican riesgos de incorrección material antes de definir las pruebas. Hay que describir el trabajo de forma global y detallada, con los riesgos inherentes y de control.",
-  modules: [
-    {
-      title: "Términos y tres riesgos",
-      fig: "tres",
-      paras: [
-        "Conviene distinguir las palabras, porque cada una decide algo distinto."
-      ],
-      list: [
-        "Alcance. La lectura lo usa de dos modos: la intensidad y profundidad de los procedimientos, según la actividad de la entidad; y, más adelante, el periodo que se revisa.",
-        "Naturaleza. Si la mayoría de las pruebas mira controles, el trabajo es de cumplimiento. Si la mayoría valida saldos, es sustantivo.",
-        "Oportunidad. El momento en que se aplica un procedimiento condiciona la conclusión.",
-        "Planificar. Disminuir el riesgo y fijar naturaleza, oportunidad y alcance, en dos piezas: estrategia global y plan.",
-        "Estrategia (NIA 300). Características del trabajo, objetivos e informes, factores significativos para la dirección, resultados preliminares, y naturaleza y extensión de las pruebas: de cumplimiento, sustantivas o analíticas.",
-        "Plan detallado (NIA 300). Naturaleza, momento y extensión de la valoración del riesgo; lo mismo en la ejecución, con las pruebas por área; y los programas.",
-        "Programa. Lista ordenada de procedimientos, con extensión y oportunidad. Orienta, deja registro y se prepara para cada encargo."
-      ],
-      after: "Las pruebas analíticas comparan lo registrado con las expectativas de quien revisa. Las de cumplimiento buscan la efectividad de los controles; la NIA 330 pide diseñarlas si se va a confiar en ellos. Las sustantivas, también según la NIA 330, buscan incorrecciones materiales en las afirmaciones de la dirección, en cada transacción, saldo o revelación material.",
-      end: "El riesgo de emitir un informe incorrecto, por no detectar errores o fraudes significativos, tiene tres piezas (Montes, 2021): inherente (el negocio, al margen de los controles), de control (los sistemas, incluida la función interna) y de detección (la naturaleza y el alcance de las pruebas). El riesgo de incorrección material, según la NIA 200, es anterior al examen y se compone solo del inherente y del de control. El inherente está fuera del control del auditor: depende de operaciones, productos, volumen, sistemas, situación económica, entorno, gerencia y recursos. El de control también está fuera de su control directo, pero baja si los controles efectivos aumentan y si se adoptan las recomendaciones.",
-      act: {
-        q: "¿Cuál de estos NO forma parte del riesgo de incorrección material?",
-        options: [
-          "El riesgo inherente.",
-          "El riesgo de control.",
-          "El riesgo de detección."
-        ],
-        ok: 2,
-        why: "La lectura compone el riesgo de incorrección material con el inherente y el de control. El de detección entra cuando se habla del riesgo de un informe incorrecto, junto con los otros dos."
-      }
-    },
-    {
-      title: "Cómo se valora el riesgo",
-      fig: "baremo",
-      paras: [
-        "La NIA 315 pide indagar a la dirección, a la función interna si existe y a otras personas que puedan informar, y usar observación, inspección y procedimientos analíticos. Antes conviene tener la materialidad: el monto máximo tolerable para decidir si hará falta proponer ajustes.",
-        "La lectura propone: nivel de riesgo = impacto × probabilidad. El impacto máximo vale 5 y la probabilidad máxima vale 5, así que el tope es 25. El baremo es: 1 a 8, bajo; 9 a 17, medio; 18 a 25, alto. En el mapa de calor, verde es bajo, amarillo es medio y rojo es alto."
-      ],
-      list: [
-        "Entre 18 y 25 no hay confianza en los controles: la naturaleza es sustantiva.",
-        "Entre 9 y 17 el énfasis es sustantivo, con verificación de controles.",
-        "Entre 1 y 8 hay confianza en los controles: el enfoque es de cumplimiento."
-      ],
-      after: "El marco de referencia incluye las NIA, aunque nacieron para encargos de información financiera. La lectura da ejemplos por tipo de trabajo, y hace falta documentación para ver si la entidad se apega a ese marco.",
-      list2: [
-        "Información financiera: normas internacionales de información financiera; normas tributarias, aduaneras y municipales; leyes del sector; control interno y gestión de riesgos.",
-        "Operacional: control interno y riesgos; mapa de procesos; procedimientos y actividades; misión, visión y objetivos; presupuestos operativos y de inversión.",
-        "Gubernamental: planes operativos anuales; planificación y presupuestos de proyectos; cronogramas; lineamientos legales y sublegales; control interno y control legal.",
-        "Laboral: leyes de trabajo; retenciones y aportes patronales; normas internacionales de información financiera; contrataciones colectivas, si existen; procedimientos de control interno.",
-        "Seguridad de la información: plan de contingencia; segregación de accesos y de usos de activos tecnológicos; controles sobre la información; clasificación de su criticidad."
-      ],
-      end: "La aceptación, según la NIA 210, se documenta en una carta (la lectura remite al modelo de Morón, 2022) entre el auditor o la firma y la dirección, al inicio del trabajo de aseguramiento.",
-      act: {
-        q: "Impacto 5 y probabilidad 4. ¿Qué dice el baremo de la lectura?",
-        options: [
-          "20 puntos: riesgo alto y enfoque sustantivo.",
-          "9 puntos: riesgo bajo y enfoque de cumplimiento.",
-          "20 puntos: riesgo medio, sin pruebas."
-        ],
-        ok: 0,
-        why: "5 × 4 = 20, y de 18 a 25 es alto. En ese tramo la lectura no confía en los controles y señala un enfoque sustantivo. El tramo bajo es de 1 a 8, no de 20."
-      }
-    },
-    {
-      title: "La estrategia",
-      fig: "lazo",
-      paras: [
-        "Según la NIA 300, la estrategia ayuda a fijar recursos y a designar al equipo. Incluye entender el proceso o el área y, si el encargo es de información financiera, la estructura financiera. Al final se definen naturaleza y alcance.",
-        "Estrategia y plan detallado no son pasos rígidos ni aislados: están entrelazados. Un cambio en uno puede cambiar el otro. Con la estrategia se arma el plan para tratar lo identificado y usar bien los recursos."
-      ],
-      listTitle: "Para entender la entidad, la lectura sugiere pedir",
-      list: [
-        "El acta de constitución y el objeto, para ubicar actividad, sector y normas.",
-        "El mapa estratégico, con objetivos e indicadores.",
-        "El mapa de procesos medulares y de apoyo.",
-        "La estructura financiera: activos, pasivos y patrimonio.",
-        "Clientes, proveedores, empleados, mercados y partes interesadas.",
-        "Los sistemas que procesan la información contable y administrativa."
-      ],
-      after: "La naturaleza se fija después de valorar los riesgos. Interés en cálculos y en la exactitud de los saldos: trabajo sustantivo. Pruebas sobre controles: trabajo de cumplimiento. La lectura caracteriza, en general, como de cumplimiento los encargos operacionales, gubernamentales, operativos y de evaluación de sistemas computarizados.",
-      end: "El alcance temporal suele ser un ejercicio, o el periodo del acuerdo inicial. En lo preliminar, las pruebas analíticas comparan tendencias —ingresos, plantilla, costos, activos fijos, unidades vendidas— para ver movimientos inusuales. Las áreas de mayor importancia relativa, posibles de fraude o error, concentran las pruebas (NIA 320). La materialidad es relativa, no absoluta: lo que pesa en una empresa pequeña o mediana puede no pesar en una grande. Se eligen base y porcentaje con juicio profesional. En circunstancias normales, la lectura cita el 5% de las utilidades netas antes de impuestos; también el 1% de los ingresos o el 2% de los activos. Hay tres capas: global, de planificación y de ajustes. En el ejemplo impreso, Empresa Ejemplo, C.A. tiene una utilidad antes de impuestos de $1.527.640. El cuadro anota 76.382 como materialidad global (5% de esa utilidad), 3.819 como materialidad de planificación y 191 como materialidad para ajustes. Por debajo de 191, el texto trata el monto como inmaterial para proponer ajustes. Las variables del periodo —facturación, compras, activos fijos, actas, inversiones, financiamiento, avance de obras— se eligen según los riesgos inherentes y de control.",
-      act: {
-        q: "¿La materialidad es el mismo monto para una empresa pequeña y para una grande?",
-        options: [
-          "No. Es relativa: depende de la entidad, de la base y del porcentaje.",
-          "Sí. La lectura fija un monto único para todas.",
-          "Sí, siempre que el periodo sea de un mes."
-        ],
-        ok: 0,
-        why: "La lectura dice que lo significativo para una pequeña o mediana puede no serlo para una grande. Por eso se eligen base y porcentaje con juicio profesional, y no un monto absoluto."
-      }
-    },
-    {
-      title: "El plan detallado",
-      fig: "prog",
-      paras: [
-        "El plan detallado es más específico que la estrategia (NIA 300): dice la naturaleza, el momento y la extensión de los procedimientos, y las pruebas según el enfoque ya definido.",
-        "El cuestionario de control interno (Auditool, 2022) pregunta por los controles de cada área para ver qué puede ser inadecuado. Lo responden los responsables. Las debilidades se confirman después con pruebas de cumplimiento. En el ejemplo de compras, los objetivos son identificar controles clave, alimentar las pruebas, fijar alcance, frecuencia y oportunidad, y ver debilidades. Se archiva en los papeles de trabajo. Pregunta, entre otras cosas, si hay un departamento, si está centralizado, si hay un responsable, cargos, delegación, segregación frente a recepción, cuentas por pagar, tesorería y almacén, normas, manual y presupuesto.",
-        "La matriz de riesgos y controles reúne el área, los riesgos y los controles que los mitigan. Sirve de soporte de las conclusiones y para agrupar debilidades y reportarlas a la dirección. El modelo está en una lectura complementaria; aquí importa para qué sirve."
-      ],
-      listTitle: "Técnicas que cita la lectura",
-      list: [
-        "Estudio general: mirada a las características de la empresa, las cuentas o las operaciones.",
-        "Análisis: los componentes de un todo.",
-        "Inspección: verificación física.",
-        "Confirmación: un tercero, el auditor, ratifica un saldo, un hecho o una operación.",
-        "Investigación: entrevistas con el personal.",
-        "Observación: ver, de forma menos formal, cómo se hace el trabajo en la práctica.",
-        "Cálculos: comprobar la aritmética."
-      ],
-      after: "Entre los procedimientos están el corte (por ejemplo, las últimas facturas del periodo y las primeras del siguiente), la inspección física, la revisión de cálculos del cliente, la documentación soporte, las pruebas con computador, los pasivos no registrados y los pagos posteriores al alcance. También se miran movimientos inusuales, partidas extraordinarias, ajustes manuales y saldos inactivos.",
-      end: "Las pruebas se concentran en lo material. Lo que no lo es se revisa con menor rigurosidad, pero la lectura aclara que todas las áreas se revisan. El ejemplo distingue compras (cumplimiento), conciliaciones bancarias (cumplimiento y sustantiva), depreciación (sustantiva), crecimiento de ventas (analítica) y ejecución presupuestaria (cumplimiento). El programa es el producto final del plan detallado. En cuentas por cobrar, el ejemplo busca ver los controles documentados y la razonabilidad del saldo: antigüedad, provisión, factoraje en actas, expedientes, confirmaciones y procedimientos alternativos si no responden. La gerencia responde por la información; el auditor, por ejecutar el trabajo según las NIA. Eso queda en la carta de encargo.",
-      act: {
-        q: "Hace falta que alguien ajeno a la empresa ratifique un saldo. ¿Qué técnica es?",
-        options: [
-          "Confirmación.",
-          "Cálculo aritmético de la misma cuenta.",
-          "Solo lectura del mapa estratégico."
-        ],
-        ok: 0,
-        why: "La lectura define la confirmación como la ratificación, por el auditor en calidad de persona ajena a la empresa, de un saldo, un hecho o una operación. El cálculo verifica aritmética; el mapa estratégico sirve para entender objetivos, no para ratificar un saldo."
-      }
-    }
-  ],
-  quiz: [
-    { q: "El riesgo de incorrección material, según la NIA 200 en esta lectura, está compuesto por…", options: ["Riesgo inherente y riesgo de control.", "Solo el riesgo de detección.", "El retraso en una reunión."], ok: 0, why: "Es el riesgo de que los estados financieros tengan errores antes del examen. El de detección se suma en el riesgo de un informe incorrecto, pero no forma parte, por sí solo, del de incorrección material." },
-    { q: "El riesgo inherente depende de las operaciones y está fuera del control del auditor.", options: ["Verdadero", "Falso"], ok: 0, why: "La lectura, con Montes (2021), lo trata como propio del negocio, antes de considerar los controles." },
-    { q: "A más controles internos efectivos, mayor es el riesgo de control.", options: ["Verdadero", "Falso"], ok: 1, why: "La lectura concluye lo contrario: a más controles efectivos, menor riesgo de control." },
-    { q: "Impacto 5 y probabilidad 5. ¿Cómo lo clasifica el baremo?", options: ["25 puntos: riesgo alto.", "10 puntos: riesgo bajo.", "25 puntos: riesgo medio."], ok: 0, why: "Nivel = impacto × probabilidad. El máximo es 25. De 18 a 25 es alto; de 9 a 17, medio; de 1 a 8, bajo." },
-    { q: "Si el riesgo inherente y el de control quedan entre 18 y 25, el enfoque es…", options: ["Sustantivo, porque no hay confianza en los controles.", "De cumplimiento, porque los controles se dan por buenos.", "Sin pruebas, porque el riesgo ya se midió."], ok: 0, why: "Ese tramo implica no confiar en los controles. Entre 9 y 17 hay énfasis sustantivo con verificación de controles. Entre 1 y 8, cumplimiento." },
-    { q: "En esta lectura, el alcance también nombra el periodo que se revisa.", options: ["Verdadero", "Falso"], ok: 0, why: "Además de la intensidad de los procedimientos, la lectura llama alcance a la extensión temporal de las pruebas: a menudo un ejercicio, o el periodo del acuerdo." },
-    { q: "Comparar los ingresos de este periodo con los del anterior, para ver un movimiento inusual, es…", options: ["Una prueba analítica.", "Una confirmación de un tercero.", "Una toma física de inventarios."], ok: 0, why: "Las pruebas analíticas comparan lo registrado con una expectativa o una tendencia. La lectura usa ese tipo de comparación en la evidencia preliminar." },
-    { q: "La materialidad es absoluta: el mismo monto importa igual en una empresa pequeña y en una grande.", options: ["Verdadero", "Falso"], ok: 1, why: "La lectura dice que es relativa. Lo significativo para una pequeña o mediana puede no serlo para una grande." },
-    { q: "En circunstancias normales, ¿qué base habitual cita la lectura?", options: ["5% de las utilidades netas antes de impuestos.", "50% de las ventas de un mes.", "El número de empleados, sin porcentajes."], ok: 0, why: "Así lo expone la lectura, con Auditool (2017). También menciona el 1% de los ingresos o el 2% de los activos como otros criterios." },
-    { q: "¿Qué es, en el ejemplo, el producto final del plan detallado?", options: ["El programa de trabajo, con los procedimientos que se van a aplicar.", "Solo el acta de constitución.", "Un mapa de calor sin pruebas."], ok: 0, why: "El programa ordena pruebas y procedimientos y orienta la evidencia. El de cuentas por cobrar, por ejemplo, mira controles documentados y la razonabilidad del saldo." }
-  ]
-},
-l3: {
-  title: "Memorándum de planificación",
-  kicker: "Lectura 3",
-  cover: "carpeta",
-  blurb: "Cómo se documentan la estrategia, los riesgos y el plan, en un solo memorándum.",
-  intro: "El memorándum cierra la planificación. Resume la estrategia y el plan: riesgos de incorrección material, naturaleza, alcance, procedimientos y pruebas, reunidos en los programas.",
-  modules: [
-    {
-      title: "Por qué y qué documentar",
-      fig: "factores",
-      paras: [
-        "La NIA 230 dice que la documentación evidencia las bases de la conclusión y que se planificó y se ejecutó el trabajo conforme a las NIA y a los requisitos legales o reglamentarios.",
-        "La lectura llama a eso papeles de trabajo y enumera beneficios: facilitar la planificación y la ejecución, facilitar la supervisión, verificar responsabilidades, rendir cuentas y archivar asuntos significativos para encargos futuros.",
-        "La rutina, según la NIA 230, registra procedimientos aplicados, evidencia obtenida y conclusiones. Puede vivir en archivo físico, copias, software, hojas de cálculo o procesadores de texto. Sirve para que el equipo conozca la empresa y para guardar situaciones particulares."
-      ],
-      listTitle: "Mínimo al cerrar la planificación",
-      list: [
-        "Naturaleza, momento y extensión de los procedimientos.",
-        "Requisitos legales y reglamentarios.",
-        "Procedimientos y evidencia esperada.",
-        "Asuntos significativos de las entrevistas y el juicio sobre ellos.",
-        "Partidas que destaquen los procedimientos analíticos.",
-        "Materialidad global, de planificación y de ajustes.",
-        "Áreas de mayor importancia relativa y niveles de riesgo: alto, medio y bajo.",
-        "Matriz de riesgos inherentes y de control.",
-        "Pruebas, equipo, cronograma de horas y entrevistas con nombre y cargo."
-      ],
-      end: "Documentar a tiempo, de forma suficiente y adecuada, mejora la calidad y permite revisar la evidencia y las conclusiones antes de cerrar el informe. Por eso se documenta desde el inicio. La extensión depende del tamaño y la complejidad, de los procedimientos, de los riesgos de incorrección material, de lo significativa que sea la evidencia, de las excepciones y de la metodología y las herramientas.",
-      act: {
-        q: "¿Por qué la lectura pide documentar desde el inicio, y no solo al final?",
-        options: [
-          "Porque la documentación oportuna mejora la calidad y permite revisar evidencia y conclusiones antes del informe.",
-          "Porque la NIA 230 prohíbe guardar papeles de trabajo.",
-          "Porque el tamaño de la empresa no influye en nada."
-        ],
-        ok: 0,
-        why: "Esa es la idea de la NIA 230 en la lectura. La extensión, además, sí depende de factores como el tamaño, los riesgos y la evidencia. Los papeles se conservan; no se prohíben."
-      }
-    },
-    {
-      title: "Documentar la estrategia",
-      fig: "seis",
-      paras: [
-        "Una planificación bien hecha concentra el trabajo en las áreas de alto riesgo, asegura los procedimientos necesarios y deja claro qué se espera de cada persona (Auditool, 2017b).",
-        "La NIA 300, en esta lectura, pone primero la estrategia global. Cuando ya hay información suficiente sobre los riesgos, se plantea el plan detallado. La estrategia empieza en la contratación: responsabilidades claras, experiencia previa y conversación sobre cambios recientes y resultados. El tiempo depende del tamaño y la complejidad de la empresa y del equipo."
-      ],
-      listTitle: "En la fase I se reúne",
-      list: [
-        "Aceptación del cliente y términos del trabajo.",
-        "Entendimiento general: nombre, objeto, accionistas y patrimonio, actas del último año, junta directiva, proyectos e indicios de que el negocio sigue en marcha.",
-        "Estructura, servicios, estrategia y mapa de procesos estratégicos, medulares y de apoyo.",
-        "Ambiente de control y partes interesadas: clientes, proveedores, empleados, entes que pueden fiscalizar, comunidades.",
-        "Marco contable y del sector; resultados, cambios y procedimientos analíticos.",
-        "Indicadores de liquidez, autonomía, endeudamiento y rotación de activos.",
-        "Sistemas de información: si son más robustos, puede haber más confianza en los controles del registro.",
-        "Equipo, con personas expertas en las áreas que hagan falta."
-      ],
-      after: "La fase II identifica la materialidad global y, después, la de planificación y la de ajustes; valora riesgos en alto, medio o bajo; analiza si el control interno es efectivo; y elige pruebas según la criticidad.",
-      end: "Auditool (2017a), citado aquí, propone tres procedimientos: indagaciones con la dirección, observación e inspección, y procedimientos analíticos. Se aplican a seis fuentes: factores externos (industria, regulador y marco de información); naturaleza de la entidad (operaciones, personal clave, propiedad, gobierno, inversión, estructura y financiamiento); políticas contables (selección, aplicación y razones de un cambio); objetivos y estrategias, con los riesgos financieros asumidos; desempeño financiero (qué se mide y quién lo revisa); y control interno (procesos y controles que mitigan, y la evaluación periódica del sistema).",
-      act: {
-        q: "La entidad cambió una política contable y explica por qué. ¿A cuál de las seis fuentes corresponde?",
-        options: [
-          "Políticas contables.",
-          "Factores externos.",
-          "Solo el cronograma de horas del equipo."
-        ],
-        ok: 0,
-        why: "La lectura ubica en las políticas contables la selección, la aplicación y las razones de los cambios. Los factores externos son la industria, el regulador y el marco de información. El cronograma es parte del archivo, no una de las seis fuentes."
-      }
-    },
-    {
-      title: "El modelo del memorándum",
-      fig: "capas",
-      paras: [
-        "Después de conocer la entidad, el entorno y el marco, se identifican factores de riesgo y comportamientos inusuales (Auditool, 2022). El plan detallado tiene dos fases. En la primera: la naturaleza (si hay confianza en los controles, cumplimiento; si no la hay, sustantivo o, a veces, mixto), la extensión (periodo y énfasis) y la descripción de pruebas y técnicas. En la segunda: los programas, paso a paso, para obtener evidencia suficiente y de calidad.",
-        "La valoración de riesgos se hace en la estrategia. El plan detallado usa esos riesgos para elegir pruebas. Si los riesgos inherentes son altos, las pruebas son sustantivas. Si el riesgo de control es bajo, las pruebas son de cumplimiento, para ver si los controles son eficientes."
-      ],
-      listTitle: "El modelo pide, en la estrategia",
-      list: [
-        "Empresa, auditor, periodo y objeto.",
-        "Composición patrimonial, junta directiva, alta dirección y asuntos de las asambleas.",
-        "Estructura organizacional, con el número de empleados, y estructura operacional o cadena de valor.",
-        "Partes interesadas y marco aplicable.",
-        "Indicadores analíticos: crecimiento de ingresos, utilidad de operaciones, utilidad neta y evolución de gastos.",
-        "Indicadores financieros: liquidez, prueba ácida, endeudamiento, autonomía y rotación de activos.",
-        "Sistema de información y equipo: socio o gerente, encargado y asistente, con horas estimadas.",
-        "Materialidad y matriz de riesgos por área: inherente y de control."
-      ],
-      after: "En ese modelo, la materialidad global es el 5% de la utilidad antes de impuestos, la de planificación es el 2,5% de esa utilidad y la de ajustes es el 5% de la materialidad de planificación. En la matriz, rojo es alto, amarillo es medio y verde es bajo.",
-      end: "La parte detallada del modelo fija la naturaleza, la extensión —por lo general un año, con fecha de inicio y de cierre—, las pruebas por área (cumplimiento, sustantiva o analítica) y los programas que usará el equipo. La lectura cierra así: un trabajo bien planificado se apoya en el análisis de riesgos. Conviene seguir la estructura del memorándum para cuidar la calidad y las expectativas de quien contrata. El modelo puede adaptarse a distintos tipos de encargo.",
-      act: {
-        q: "El equipo confía en los controles internos. Según esta lectura, ¿qué enfoque corresponde?",
-        options: [
-          "De cumplimiento.",
-          "Siempre sustantivo, precisamente porque hay confianza.",
-          "Ninguno: la confianza vuelve innecesario el plan."
-        ],
-        ok: 0,
-        why: "La lectura es directa: con confianza en los controles, el enfoque es de cumplimiento. Sin confianza, es sustantivo o mixto. La confianza no elimina el plan ni invierte esa premisa."
-      }
-    }
-  ],
-  quiz: [
-    { q: "La NIA 230 señala que la documentación evidencia las bases de la conclusión y el apego a las NIA y a los requisitos legales o reglamentarios.", options: ["Verdadero", "Falso"], ok: 0, why: "Esa es la función que la lectura atribuye a la documentación." },
-    { q: "¿Cuál de estos beneficios atribuye la lectura a los papeles de trabajo?", options: ["Facilitar la supervisión y poder rendir cuentas del trabajo.", "Reemplazar el criterio de la dirección sobre las cifras.", "Borrar los asuntos útiles para un encargo futuro."], ok: 0, why: "También facilitan planificar y ejecutar, y archivan cuestiones significativas. No sustituyen la responsabilidad de la dirección sobre la información." },
-    { q: "La extensión de la documentación es siempre la misma, sin importar la empresa.", options: ["Verdadero", "Falso"], ok: 1, why: "Depende, entre otros, del tamaño y la complejidad, de los procedimientos, de los riesgos, de la evidencia, de las excepciones y del método." },
-    { q: "Según esta lectura, ¿en qué orden se documenta la planificación?", options: ["Primero la estrategia global y, con información suficiente de riesgos, el plan detallado.", "Primero los programas y, al final, el nombre de la empresa.", "Solo el plan detallado, sin estrategia."], ok: 0, why: "Así lo plantea la NIA 300 en esta lectura. La estrategia empieza con la contratación y el entendimiento." },
-    { q: "Un cambio de política contable, con sus razones, corresponde a…", options: ["Políticas contables.", "Factores externos.", "La prueba ácida, nada más."], ok: 0, why: "Auditool (2017a), citado aquí, ubica ahí la selección, la aplicación y las razones del cambio. Los factores externos son industria, regulador y marco." },
-    { q: "Los tres procedimientos de valoración que cita la lectura son indagaciones con la dirección, observación e inspección, y procedimientos analíticos.", options: ["Verdadero", "Falso"], ok: 0, why: "Con ellos se recorren las seis fuentes de riesgo." },
-    { q: "Si no hay confianza en los controles, esta lectura dice que el enfoque será…", options: ["Sustantivo o, en algunos casos, mixto.", "Siempre solo de cumplimiento.", "Innecesario."], ok: 0, why: "Con confianza, cumplimiento. Sin confianza, sustantivo o mixto: pruebas sustantivas y de cumplimiento." },
-    { q: "En el modelo, la materialidad para proponer ajustes es…", options: ["El 5% de la materialidad de planificación.", "El mismo 5% de la utilidad antes de impuestos, otra vez.", "El doble de la utilidad."], ok: 0, why: "El cuadro fija la global en 5% de la utilidad antes de impuestos, la de planificación en 2,5% de esa utilidad y la de ajustes en 5% de la de planificación." },
-    { q: "En la matriz del memorándum, el rojo marca riesgo bajo.", options: ["Verdadero", "Falso"], ok: 1, why: "Rojo es alto, amarillo es medio y verde es bajo." },
-    { q: "La conclusión de la lectura sobre el memorándum es que…", options: ["Conviene seguir su estructura, y el modelo puede adaptarse.", "Solo sirve para un formato y no admite adaptación.", "Sustituye el análisis de riesgos."], ok: 0, why: "Un trabajo bien planificado se apoya en el análisis de riesgos. La estructura busca calidad y responder a quien contrata. El modelo puede adaptarse a distintos tipos de encargo." }
-  ]
-}
-};
+const BIB = [
+  "Contraloría General de la República. (2017). Gaceta Oficial Digital 17 de enero de 2017, Decreto N.° 07-2017-DNMySC.",
+  "Contraloría General de la República. (2023). Gaceta Oficial Digital 11 de abril de 2023, Resolución N.° 382-2023-DNMySC."
+];
 
-function esc(s) {
-  return String(s)
-    .replace(/&/g, "\u0026amp;")
-    .replace(/</g, "\u0026lt;")
-    .replace(/>/g, "\u0026gt;")
-    .replace(/"/g, "\u0026quot;")
-    .replace(/'/g, "\u0026#39;");
-}
-function blank() {
-  return { l1: { a: {}, q: null }, l2: { a: {}, q: null }, l3: { a: {}, q: null } };
-}
-let state = load();
-function load() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(KEY));
-    if (!raw || !raw.l1 || !raw.l2 || !raw.l3) return blank();
-    return raw;
-  } catch (e) {
-    return blank();
+const READINGS = [
+  {
+    id: "l1",
+    n: "Lectura 1",
+    title: "Introducción del Manual General de Contabilidad Gubernamental",
+    blurb: "Qué es el manual, a quién alcanza el plan de cuentas y cómo se lee su código.",
+    cover: "l1cover",
+    coverCap: "Ilustración original. El manual ordena el registro de los hechos económicos.",
+    modules: [
+      {
+        id: "m1",
+        title: "El manual y la información que busca",
+        idea: "El manual existe para registrar e interpretar los hechos económicos del sector público y representarlos en estados financieros.",
+        fig: "l1m1",
+        cap: "Ilustración original. Del hecho económico al estado financiero, idea ya expuesta en el texto.",
+        blocks: [
+          { t: "p", x: "Esta lectura estudia el Manual General de Contabilidad Gubernamental. Lo elaboró la Contraloría General de la República, por medio de la Dirección Nacional de Métodos y Sistemas de Contabilidad, con las atribuciones que le da la ley. Está basado en las Normas Internacionales de Contabilidad del Sector Público." },
+          { t: "p", x: "El manual define las operaciones de la recaudación diaria, los depósitos bancarios y los informes diarios y consolidados, además de los controles internos. La finalidad es un alto nivel de control y que cada servidor público comprenda sus responsabilidades y sus acciones administrativas." },
+          { t: "p", x: "La Dirección Nacional de Contabilidad y el Departamento de Contabilidad de Ingresos deben establecer y mantener un sistema contable dentro de la normativa: registros oportunos del importe, en las cuentas apropiadas. Ese sistema tiene que cubrir la información de los distintos niveles de la administración y ofrecer estados financieros e información para decidir con conocimiento real de las operaciones." },
+          { t: "p", x: "La Gaceta Oficial Digital del 17 de enero de 2017 explica el sentido de esa información. La información financiera consolidada del sector público, y también la de cada entidad, ordena las finanzas públicas y permite la rendición de cuentas, la toma de decisiones y el control. Debe reconocerse de manera transparente, oportuna y de calidad, con estándares nacionales e internacionales, y dar a conocer la realidad económica, financiera, social y ambiental del país." }
+        ],
+        activity: {
+          prompt: "Según esta lectura, ¿para qué se usa el manual?",
+          options: [
+            "Solo para archivar depósitos bancarios, sin producir estados financieros.",
+            "Para registrar e interpretar hechos económicos, representarlos en estados financieros y ordenar la recaudación, los informes y los controles internos.",
+            "Para sustituir las normas internacionales por un informe único de cada municipio."
+          ],
+          answer: 1,
+          why: "La lectura dice que el sector público usa este instrumento para el registro y la interpretación de los hechos económicos mediante estados financieros. Además, el manual define recaudación diaria, depósitos, informes diarios y consolidados, y controles internos."
+        }
+      },
+      {
+        id: "m2",
+        title: "El plan y a quién se aplica",
+        idea: "El Plan General de Cuentas es un componente central del manual: identifica, resume y reconoce las operaciones en cada elemento de los estados financieros.",
+        blocks: [
+          { t: "p", x: "El plan se aplica a las entidades económicas públicas del gobierno general. Sus grupos institucionales son estos:" },
+          { t: "ul", items: [
+            "Gobierno Central.",
+            "Instituciones independientes creadas por mandato constitucional o jurídico.",
+            "Instituciones descentralizadas no empresariales y la Caja de Seguro Social.",
+            "Gobiernos locales.",
+            "Instituciones sin fines de lucro no de mercado."
+          ]},
+          { t: "p", x: "El resto de las entidades del sector público no copia el plan sin más: adapta sus planes de cuentas a partir de este, según sus necesidades de información." },
+          { t: "p", x: "La lectura lo resume así: el plan permite identificar, resumir y reconocer las operaciones económicas de las entidades en cada elemento de los estados financieros. El detalle de descripciones y dinámicas está en el capítulo IV de la Gaceta Oficial Digital del 17 de enero de 2017." }
+        ],
+        activity: {
+          prompt: "Una institución sin fines de lucro que no es de mercado, ¿queda en el ámbito directo del plan?",
+          options: [
+            "No. El plan solo nombra al Gobierno Central.",
+            "Sí. La lectura la incluye entre los grupos del gobierno general.",
+            "Solo si, además, es una empresa pública que vende en el mercado."
+          ],
+          answer: 1,
+          why: "El inciso e) de esta lectura incluye a las instituciones sin fines de lucro no de mercado. Quienes no integran esos cinco grupos no quedan ignorados: adaptan su plan con base en este."
+        }
+      },
+      {
+        id: "m3",
+        title: "Cómo está armado el código",
+        idea: "El código es decimal: cada tramo de dígitos agrega un nivel, desde la clase hasta la subcuenta.",
+        fig: "l1m3",
+        cap: "Ilustración original. Cada barra es un tramo más largo del mismo código: 1, 2, 4, 6 y 8 dígitos.",
+        blocks: [
+          { t: "p", x: "La lectura distingue cinco niveles. No hace falta memorizar todos los ejemplos: conviene ver qué pregunta responde cada tramo." },
+          { t: "h", x: "Clase: el primer dígito" },
+          { t: "p", x: "Identifica el elemento de los estados financieros o la ejecución presupuestaria. Hay seis clases: 1 Activos, 2 Pasivos, 3 Patrimonio, 4 Ingresos, 5 Gastos y costos, y 9 Cuentas presupuestarias." },
+          { t: "h", x: "Grupo: los dos primeros dígitos" },
+          { t: "p", x: "Es el segundo nivel de agregación. Ejemplos de la lectura: 11 Activos corrientes, 21 Pasivos corrientes, 31 Activos netos/Patrimonio, 41 Ingresos sin contraprestación, 51 Gastos y 91 Ejecución presupuestaria." },
+          { t: "h", x: "Subgrupo: los cuatro primeros dígitos" },
+          { t: "pairs", rows: [
+            ["1101", "Efectivo y equivalentes de efectivo"],
+            ["2101", "Cuentas por pagar"],
+            ["3101", "Hacienda pública"],
+            ["4101", "Impuestos"],
+            ["5101", "Gastos de personal"],
+            ["9101", "Ejecución presupuestaria de ingresos"]
+          ]},
+          { t: "h", x: "Cuenta de mayor: seis dígitos. Subcuenta: ocho" },
+          { t: "p", x: "El mayor es el cuarto nivel. Por ejemplo, 110101 Cajas, 410101 Impuesto sobre la renta o 510101 Sueldos. La subcuenta es el quinto nivel: 11010101 Caja general, 21010101 Sueldos, 31020101 Traspaso de fondos, 41020101 Del Gobierno Central y 51040101 Al Gobierno Central." },
+          { t: "p", x: "Un mismo número se va precisando. 1 es la clase Activos; 11, el grupo de activos corrientes; 1101, el subgrupo de efectivo; 110101, la cuenta de mayor Cajas; 11010101, la subcuenta Caja general." }
+        ],
+        activity: {
+          prompt: "El código 110101 tiene seis dígitos. ¿Qué nivel es?",
+          options: [
+            "Clase, porque empieza por 1.",
+            "Subgrupo, porque habla de efectivo.",
+            "Cuenta de mayor general.",
+            "Subcuenta, porque ya nombra una caja concreta."
+          ],
+          answer: 2,
+          why: "En esta lectura la cuenta de mayor corresponde a los seis primeros dígitos. 1101 tendría cuatro y sería subgrupo; 11010101 tendría ocho y sería subcuenta. 110101 es, en el ejemplo, Cajas."
+        }
+      },
+      {
+        id: "m4",
+        title: "Qué representa cada clase",
+        idea: "La clase dice qué elemento es. La naturaleza del saldo dice si, en general, vive al débito o al crédito.",
+        fig: "l1m4",
+        cap: "Ilustración original. Dos columnas: una de saldos deudores y otra de saldos acreedores, como explica el texto.",
+        blocks: [
+          { t: "h", x: "Activo" },
+          { t: "p", x: "Bienes y derechos que la entidad económica pública controla hoy por sucesos pasados, y de los que espera un beneficio económico o un potencial de servicio. Incluye corrientes y no corrientes. Su saldo es débito." },
+          { t: "h", x: "Pasivo" },
+          { t: "p", x: "Obligaciones presentes de la entidad que dan lugar a una salida de recursos y surgen de sucesos pasados. Incluye pasivo corriente y no corriente. Su saldo es crédito." },
+          { t: "h", x: "Activos netos / Patrimonio" },
+          { t: "p", x: "Es la situación financiera neta: la diferencia entre activos y pasivos después de añadir otros recursos y deducir otras obligaciones reconocidas en el estado de situación financiera. El grupo reúne recursos destinados a crear y desarrollar las entidades y las variaciones del resultado del periodo, ahorro o desahorro." },
+          { t: "p", x: "Sus subgrupos son Hacienda pública, Hacienda pública adicional, Reservas y Resultados. En general el saldo es crédito. La lectura advierte una excepción: 3102 Hacienda pública adicional y 3104 Resultados pueden tener saldo débito." },
+          { t: "h", x: "Ingresos" },
+          { t: "p", x: "Entradas brutas de beneficios económicos o de potenciales de servicio del periodo, cuando aumentan la situación financiera neta por una vía distinta de las aportaciones de los propietarios. Incluye ingresos sin contraprestación y con prestación. El saldo es crédito." },
+          { t: "h", x: "Gastos y costos" },
+          { t: "p", x: "Salidas de beneficios económicos o de potenciales de servicio que disminuyen la situación financiera neta, distintas de las distribuciones a los propietarios. También incluye el costo de adquirir o producir bienes y de prestar servicios durante el periodo. El saldo es débito." },
+          { t: "h", x: "Cuentas presupuestarias" },
+          { t: "p", x: "Sirven para trasladar a la situación financiera el efecto de la ejecución presupuestaria de ingresos y de gastos, y para los compromisos presupuestarios. La lectura señala tres subgrupos: aplicaciones presupuestarias de ingresos (saldo débito), aplicaciones presupuestarias de gastos (saldo crédito) y compromisos presupuestarios de gastos (saldo crédito)." },
+          { t: "p", x: "Con este mapa de clases, grupos y subgrupos se puede seguir el proceso contable de las entidades del sector público. El movimiento fino de cada cuenta está en el capítulo IV de la gaceta citada." }
+        ],
+        activity: {
+          prompt: "¿Por qué no basta decir que todo el patrimonio tiene siempre saldo crédito?",
+          options: [
+            "Porque la lectura indica que 3102 Hacienda pública adicional y 3104 Resultados pueden tener saldo débito.",
+            "Porque el patrimonio se define como un activo corriente.",
+            "Porque las cuentas de patrimonio tienen, por regla, saldo débito."
+          ],
+          answer: 0,
+          why: "La clase y el grupo suelen tener saldo crédito, pero el texto abre una excepción expresa para las cuentas 3102 y 3104. El resto de la frase —recursos para crear la entidad y variaciones por ahorro o desahorro— explica qué está midiendo ese grupo, no anula la excepción."
+        }
+      }
+    ],
+    quiz: [
+      { k: "vf", q: "El Manual General de Contabilidad Gubernamental está basado en las Normas Internacionales de Contabilidad del Sector Público.", options: ["Verdadero", "Falso"], a: 0, why: "Así lo presenta el inicio de la lectura: el manual se estudia sobre esa base internacional." },
+      { k: "mc", q: "¿Quién desarrolló el manual, según esta lectura?", options: ["Cada gobierno local, por su propia ordenanza.", "La Contraloría General de la República, a través de la Dirección Nacional de Métodos y Sistemas de Contabilidad.", "Solo el Departamento de Contabilidad de Ingresos.", "Las entidades sin fines de lucro no de mercado."], a: 1, why: "La lectura atribuye la elaboración del manual a la Contraloría, por medio de esa dirección. La Dirección Nacional de Contabilidad y el Departamento de Contabilidad de Ingresos tienen otro papel: mantener el sistema contable dentro de la normativa." },
+      { k: "vf", q: "La Gaceta del 17 de enero de 2017 pide información solo sobre la realidad económica, y deja fuera la social y la ambiental.", options: ["Verdadero", "Falso"], a: 1, why: "El texto dice que la información debe difundir conocimiento sobre la realidad económica, financiera, social y ambiental del país. También la describe como transparente, oportuna y de calidad." },
+      { k: "mc", q: "¿Cuál afirmación recoge el ámbito del Plan General de Cuentas?", options: ["Alcanza solo al Gobierno Central.", "Se aplica a los cinco grupos del gobierno general, y las demás entidades del sector público adaptan su plan a partir de él.", "Obliga a las empresas de mercado a usar otra clasificación, sin relación con este plan.", "Excluye a la Caja de Seguro Social."], a: 1, why: "La lectura enumera cinco grupos, entre ellos la Caja de Seguro Social junto con las descentralizadas no empresariales, los gobiernos locales y las instituciones sin fines de lucro no de mercado. Las demás entidades del sector público adaptan sus planes según sus necesidades de información." },
+      { k: "mc", q: "En el código 410101 Impuesto sobre la renta, ¿qué nivel está leyendo?", options: ["La clase, porque el primer dígito es 4.", "El grupo 41 nada más.", "La cuenta de mayor general, de seis dígitos.", "La subcuenta, de ocho dígitos."], a: 2, why: "410101 tiene seis dígitos. En esta lectura ese tramo es la cuenta de mayor. La clase sería 4, el grupo 41, el subgrupo 4101 y una subcuenta llegaría a ocho dígitos." },
+      { k: "vf", q: "Las clases del plan, en esta lectura, son seis: 1, 2, 3, 4, 5 y 9.", options: ["Verdadero", "Falso"], a: 0, why: "El primer dígito identifica la clase. La lectura lista exactamente esas seis: activos, pasivos, patrimonio, ingresos, gastos y costos, y cuentas presupuestarias." },
+      { k: "vf", q: "La clase Pasivo tiene saldo de naturaleza débito, igual que el activo.", options: ["Verdadero", "Falso"], a: 1, why: "El activo, corriente y no corriente, tiene saldo débito. El pasivo, corriente y no corriente, tiene saldo crédito: son obligaciones presentes que suponen una salida de recursos." },
+      { k: "mc", q: "Los ingresos de la clase 4 aumentan la situación financiera neta…", options: ["…y en esa misma clase se incluyen las aportaciones de los propietarios.", "…cuando la entrada es distinta de las aportaciones de los propietarios.", "…solo si el dinero ya se gastó en el mismo día.", "…únicamente cuando provienen de un costo de producción."], a: 1, why: "La lectura define los ingresos como entradas brutas del periodo que aumentan la situación financiera neta, distintas de los incrementos por aportaciones de los propietarios. Su saldo es crédito e incluye grupos sin contraprestación y con prestación." },
+      { k: "mc", q: "Las aplicaciones presupuestarias de gastos y los compromisos presupuestarios de gastos tienen saldo de naturaleza…", options: ["Débito, igual que las aplicaciones de ingresos.", "Crédito.", "Siempre el mismo saldo que el activo.", "No tienen naturaleza definida en esta lectura."], a: 1, why: "La lectura separa las naturalezas: las aplicaciones de ingresos son de saldo débito; las de gastos y los compromisos de gastos son de saldo crédito. Esas cuentas trasladan el efecto de la ejecución a la situación financiera." },
+      { k: "vf", q: "Hacienda pública adicional (3102) y Resultados (3104) solo pueden tener saldo crédito.", options: ["Verdadero", "Falso"], a: 1, why: "El grupo de activos netos suele tener saldo crédito, pero la lectura dice que 3102 y 3104 pueden tener saldo débito. El grupo también recoge el ahorro o el desahorro del periodo." }
+    ]
+  },
+  {
+    id: "l2",
+    n: "Lectura 2",
+    title: "Ámbito de aplicación del Plan General de Cuentas",
+    blurb: "Quién usa el plan y cómo el cuadro general separa situación financiera, rendimiento y presupuesto.",
+    cover: "l2cover",
+    coverCap: "Ilustración original. Dos grandes bloques del cuadro: situación financiera y rendimiento.",
+    modules: [
+      {
+        id: "m1",
+        title: "Ámbito y papel del plan",
+        idea: "El plan no es solo una lista de nombres: describe cada nivel y explica cómo se debita, cómo se acredita y cuál es la naturaleza de la cuenta.",
+        blocks: [
+          { t: "p", x: "El Plan General de Cuentas se aplica a las entidades económicas públicas del gobierno general:" },
+          { t: "ul", items: [
+            "Gobierno Central.",
+            "Instituciones independientes creadas por mandato constitucional o jurídico.",
+            "Instituciones descentralizadas no empresariales y la Caja de Seguro Social.",
+            "Gobiernos locales.",
+            "Instituciones sin fines de lucro no de mercado."
+          ]},
+          { t: "p", x: "Las demás entidades del sector público adaptan sus planes a partir de este, de acuerdo con lo que necesitan informar." },
+          { t: "p", x: "El plan es uno de los componentes principales del Manual General de Contabilidad Gubernamental. Permite identificar, resumir y reconocer las operaciones económicas en cada elemento de los estados financieros. Trae la descripción de clases, grupos, subgrupos, cuentas de mayor y subcuentas, y también las dinámicas de los movimientos débito y crédito y la naturaleza de cada cuenta." }
+        ],
+        activity: {
+          prompt: "Además de identificar las operaciones, ¿qué aporta el plan según esta lectura?",
+          options: [
+            "Solo el nombre de las clases, sin decir si la cuenta es deudora o acreedora.",
+            "La descripción de los niveles y las dinámicas que explican débitos, créditos y la naturaleza de cada cuenta.",
+            "Un cuadro de salarios del personal de la Contraloría."
+          ],
+          answer: 1,
+          why: "La lectura dice que el plan contiene la descripción de clases, grupos, subgrupos, cuentas de mayor y subcuentas, y además las dinámicas de los registros al débito y al crédito y la naturaleza de cada cuenta."
+        }
+      },
+      {
+        id: "m2",
+        title: "La situación financiera en el cuadro",
+        idea: "El cuadro separa las cuentas con las que se arma el estado de situación financiera. En el activo, el orden es la liquidez.",
+        fig: "l2m2",
+        cap: "Ilustración original. De lo más disponible a lo más permanente: la idea de liquidez del activo.",
+        blocks: [
+          { t: "p", x: "En el cuadro general hay una división entre las cuentas de la contabilidad financiera —con las que se emite el estado de situación financiera— y las del estado de rendimiento financiero. Esta parte recorre la primera." },
+          { t: "h", x: "Activo, clase 1" },
+          { t: "p", x: "El grupo 11 es Activos corrientes y el 12, Activos no corrientes. Las cuentas se clasifican por su liquidez o fácil disponibilidad." },
+          { t: "pairs", rows: [
+            ["1101", "Efectivo y equivalentes de efectivo"],
+            ["1102", "Cuentas por cobrar"],
+            ["1103", "Inversiones en préstamos a corto plazo"],
+            ["1104", "Inventarios"],
+            ["1201", "Inversiones a largo plazo"],
+            ["1202", "Cuentas por cobrar a largo plazo"],
+            ["1203", "Propiedades de inversión"],
+            ["1204", "Propiedades, planta y equipo"]
+          ]},
+          { t: "h", x: "Pasivo, clase 2" },
+          { t: "p", x: "Aquí el criterio que nombra la lectura es la obligatoriedad. El grupo 21 es el pasivo corriente y el 22, el no corriente." },
+          { t: "pairs", rows: [
+            ["2101", "Cuentas por pagar"],
+            ["2102", "Deuda pública a corto plazo"],
+            ["2103", "Fondos de terceros"],
+            ["2104", "Provisiones"],
+            ["2201", "Cuentas por pagar a largo plazo"],
+            ["2202", "Deuda pública a largo plazo"],
+            ["2203", "Provisiones a largo plazo"]
+          ]},
+          { t: "h", x: "Patrimonio" },
+          { t: "p", x: "Cierra la estructura del estado de situación financiera. El grupo es 31 Activos netos/Patrimonio. En el texto de la lectura, los subgrupos quedan así: 3101 Hacienda pública, 3102 Hacienda pública nacional, 3103 Reservas y 3104 Resultados." },
+          { t: "p", x: "En la figura del mismo cuadro, el segundo rubro no se rotula igual: aparece como Hacienda pública adicional, junto con Hacienda pública, Reservas y Resultados. Conviene leer las dos presentaciones de esta lectura sin mezclarlas." }
+        ],
+        activity: {
+          prompt: "¿Por qué el efectivo (1101) está en el grupo 11 y no en el 12?",
+          options: [
+            "Porque el activo se ordena por liquidez o fácil disponibilidad, y el efectivo es corriente.",
+            "Porque todo lo que empieza por 1 es no corriente.",
+            "Porque el pasivo corriente también usa el código 11."
+          ],
+          answer: 0,
+          why: "La lectura dice que la clase 1 usa 11 para corrientes y 12 para no corrientes, y que esa clasificación sigue la liquidez. 1101 es el primer subgrupo corriente: efectivo y equivalentes de efectivo. Propiedades, planta y equipo, en cambio, es 1204."
+        }
+      },
+      {
+        id: "m3",
+        title: "Rendimiento y cuentas presupuestarias",
+        idea: "El rendimiento de esta lectura se abre con ingresos sin contraprestación y con el grupo de gastos. El presupuesto se mira por ejecución, aplicación y compromiso.",
+        fig: "l2m3",
+        cap: "Ilustración original. Ingresos y gastos se relacionan con el bloque presupuestario que el texto describe después.",
+        blocks: [
+          { t: "p", x: "En el estado de rendimiento financiero, la lectura presenta el ingreso sin contraprestación y los gastos. La clase de ingresos es 4; el grupo 41 es Ingresos sin contraprestación." },
+          { t: "pairs", rows: [
+            ["4101", "Impuestos"],
+            ["4102", "Transferencias"],
+            ["4103", "Contribuciones a la seguridad social"],
+            ["4104", "Incentivos y exoneraciones de ingresos sin contraprestación"],
+            ["4105", "Excesos de provisiones y reversiones de deterioros de activos corrientes"],
+            ["4106", "Excesos de provisiones a largo plazo y reversiones de deterioros de activos no corrientes"],
+            ["4199", "Otros ingresos sin contraprestación"]
+          ]},
+          { t: "p", x: "En gastos, el cuadro de esta lectura muestra el grupo de gastos con estos subgrupos:" },
+          { t: "pairs", rows: [
+            ["5101", "Gastos de personal"],
+            ["5102", "Servicios prestados por terceros"],
+            ["5103", "Consumo de bienes corrientes"],
+            ["5104", "Transferencias"],
+            ["5105", "Prestaciones de la seguridad social"],
+            ["5106", "Gastos financieros"],
+            ["5107", "Impuestos"],
+            ["5108", "Devoluciones de impuestos de períodos anteriores"],
+            ["5109", "Gastos por valoración de activos y pasivos financieros"]
+          ]},
+          { t: "h", x: "Cuentas presupuestarias" },
+          { t: "p", x: "Se clasifican por la ejecución y por las aplicaciones y compromisos. 91 es Ejecución presupuestaria: 9101 de ingreso y 9102 de gasto. En aplicaciones y compromisos: 9201 aplicaciones de ingreso, 9202 aplicaciones de gastos y 9203 compromisos presupuestarios de gastos." },
+          { t: "p", x: "La figura del cuadro agrupa esas cinco líneas en dos bloques: ejecución presupuestaria, y aplicaciones y compromisos presupuestarios. Con eso, la lectura cierra el recorrido del cuadro general: identificar, resumir y reconocer operaciones donde se manejan recursos públicos." }
+        ],
+        activity: {
+          prompt: "En el grupo 41 de esta lectura, ¿qué es 4103?",
+          options: [
+            "Gastos de personal.",
+            "Deuda pública a corto plazo.",
+            "Contribuciones a la seguridad social.",
+            "Ejecución presupuestaria de gasto."
+          ],
+          answer: 2,
+          why: "4103 está dentro de ingresos sin contraprestación y la lectura lo nombra contribuciones a la seguridad social. Gastos de personal es 5101, la deuda pública de corto plazo es 2102 y la ejecución de gasto es 9102."
+        }
+      }
+    ],
+    quiz: [
+      { k: "vf", q: "En esta lectura, el plan se aplica de forma directa únicamente al Gobierno Central.", options: ["Verdadero", "Falso"], a: 1, why: "El ámbito incluye cinco grupos del gobierno general: Gobierno Central, instituciones independientes, descentralizadas no empresariales y la Caja de Seguro Social, gobiernos locales e instituciones sin fines de lucro no de mercado. Las otras entidades adaptan su plan." },
+      { k: "mc", q: "La Caja de Seguro Social aparece en el ámbito junto con…", options: ["Los gastos financieros del grupo 51.", "Las instituciones descentralizadas no empresariales.", "Solo los gobiernos locales.", "Las cuentas de orden del presupuesto."], a: 1, why: "El inciso c) de esta lectura junta a las instituciones descentralizadas no empresariales y a la Caja de Seguro Social. No las coloca entre los gastos ni entre las cuentas presupuestarias." },
+      { k: "vf", q: "El plan describe los niveles de la cuenta y también las dinámicas de débito, crédito y la naturaleza de cada cuenta.", options: ["Verdadero", "Falso"], a: 0, why: "Eso es lo que la lectura llama aspectos generales: identificar, resumir y reconocer operaciones, más la descripción de los niveles y las dinámicas de registro." },
+      { k: "mc", q: "Dentro de los activos corrientes, 1104 corresponde a…", options: ["Inventarios.", "Propiedades de inversión.", "Inversiones a largo plazo.", "Provisiones."], a: 0, why: "La lectura ordena el corriente así: 1101 efectivo, 1102 cuentas por cobrar, 1103 inversiones en préstamos a corto plazo y 1104 inventarios. Propiedades de inversión es 1203, ya en no corrientes." },
+      { k: "vf", q: "Propiedades, planta y equipo se presentan en esta lectura como activo corriente, por ser lo más líquido.", options: ["Verdadero", "Falso"], a: 1, why: "El criterio del activo es la liquidez, y por eso propiedades, planta y equipo van al grupo 12, subgrupo 1204, es decir, no corrientes. Lo más disponible, como el efectivo, abre el grupo 11." },
+      { k: "mc", q: "¿Qué código de grupo usa esta lectura para el pasivo no corriente?", options: ["11", "12", "21", "22"], a: 3, why: "21 es pasivo corriente (cuentas por pagar, deuda de corto plazo, fondos de terceros y provisiones). 22 es el no corriente: cuentas por pagar a largo plazo, deuda pública a largo plazo y provisiones a largo plazo. 11 y 12 son del activo." },
+      { k: "vf", q: "En el texto de esta lectura, 3104 se asigna a Resultados.", options: ["Verdadero", "Falso"], a: 0, why: "El texto enumera 3101 Hacienda pública, 3102 Hacienda pública nacional, 3103 Reservas y 3104 Resultados. La figura llama al segundo rubro Hacienda pública adicional: es otra rotulación del mismo cuadro, no cambia el 3104 del texto." },
+      { k: "mc", q: "4105, en los ingresos sin contraprestación de esta lectura, nombra…", options: ["Impuestos.", "Excesos de provisiones y reversiones de deterioros de activos corrientes.", "Gastos de personal.", "Compromisos presupuestarios de gastos."], a: 1, why: "La lectura separa 4105 (excesos y reversiones de activos corrientes) de 4106 (excesos de provisiones a largo plazo y reversiones de activos no corrientes). Impuestos es 4101." },
+      { k: "vf", q: "En el cuadro de gastos de esta lectura, 5106 corresponde a gastos financieros.", options: ["Verdadero", "Falso"], a: 0, why: "La serie que muestra la lectura va de 5101 gastos de personal hasta 5109 gastos por valoración. 5106 está nombrado como gastos financieros, y 5107 como impuestos." },
+      { k: "mc", q: "¿Cuál código es la ejecución presupuestaria de gasto?", options: ["9101", "9102", "9201", "9203"], a: 1, why: "91 es ejecución presupuestaria: 9101 de ingreso y 9102 de gasto. 9201 son aplicaciones de ingreso, 9202 aplicaciones de gastos y 9203 compromisos de gastos. No son lo mismo ejecución y aplicación." }
+    ]
+  },
+  {
+    id: "l3",
+    n: "Lectura 3",
+    title: "Descripción del Plan General de Cuentas",
+    blurb: "Qué contiene cada clase y cómo se mueve el saldo, del activo a la ejecución del presupuesto.",
+    cover: "l3cover",
+    coverCap: "Ilustración original. Del tramo más corto al más largo del código decimal.",
+    modules: [
+      {
+        id: "m1",
+        title: "El código y la clase Activo",
+        idea: "Corriente o no corriente no es un rótulo arbitrario: depende de si el bien o el derecho se realiza dentro del ciclo, o más allá de doce meses.",
+        fig: "l3m1",
+        cap: "Ilustración original. Un plazo corta el tiempo en torno a los doce meses que usa la lectura.",
+        blocks: [
+          { t: "p", x: "La clasificación decimal que recuerda esta lectura tiene cinco tramos: clase (1 dígito), grupo (2), subgrupo (4), cuenta de mayor (6) y subcuenta (8). Los dígitos y los conceptos los determina la Contraloría General de la República, órgano rector del sistema de contabilidad gubernamental." },
+          { t: "p", x: "La clase 1 reúne bienes y derechos controlados por la entidad que informa, por sucesos pasados, de los que se espera un beneficio económico o un potencial de servicio. Incluye el grupo 11, activos corrientes, y el 12, no corrientes. La clase, sus grupos y sus subgrupos tienen saldo débito." },
+          { t: "h", x: "Grupo 11. Activos corrientes" },
+          { t: "p", x: "Son bienes y derechos que se esperan realizar, vender o consumir en el ciclo normal de operación. También entran los que se mantienen sobre todo para negociar, y el efectivo o equivalente cuyo uso no está restringido para intercambiarlo o usarlo para cancelar un pasivo, al menos dentro de los doce meses siguientes a la fecha de los estados financieros." },
+          { t: "p", x: "Sus subgrupos son 1101 Efectivo y equivalentes de efectivo, 1102 Cuentas por cobrar, 1103 Inversiones en préstamos a corto plazo y 1104 Inventarios. El saldo es débito." },
+          { t: "h", x: "Grupo 12. Activos no corrientes" },
+          { t: "p", x: "Bienes que la entidad usa de forma continua y duradera en sus actividades, y derechos cuya realización o vencimiento se espera después de los doce meses posteriores a la fecha sobre la que se informa." },
+          { t: "pairs", rows: [
+            ["1201", "Inversiones a largo plazo"],
+            ["1202", "Cuentas por cobrar a largo plazo"],
+            ["1203", "Propiedades de inversión"],
+            ["1204", "Propiedades, planta y equipo"],
+            ["1205", "Bienes históricos y culturales"],
+            ["1206", "Activos intangibles"],
+            ["1207", "Activos concesionados"],
+            ["1208", "Activos biológicos en desarrollo y de permanencia"],
+            ["1209", "Recursos naturales y medioambientales"]
+          ]},
+          { t: "p", x: "La dinámica cuenta por cuenta está en el capítulo IV de la Gaceta Oficial Digital del 17 de enero de 2017, en Descripciones y dinámicas de cuentas. Aquí importa el criterio del plazo y del uso duradero." }
+        ],
+        activity: {
+          prompt: "Un derecho que se espera cobrar a los dieciocho meses, ¿en qué grupo encaja y por qué?",
+          options: [
+            "En el 11, porque todo derecho de cobro es efectivo.",
+            "En el 12, porque su realización se espera en un plazo superior a doce meses.",
+            "En el 21, porque un cobro futuro es un pasivo corriente."
+          ],
+          answer: 1,
+          why: "El grupo 12 incluye derechos cuya realización o vencimiento supera los doce meses posteriores a la fecha sobre la que se informa. El grupo 11 es para lo que se realiza, vende o consume en el ciclo, o para el efectivo no restringido dentro de esos doce meses. Un derecho de cobro no es un pasivo."
+        }
+      },
+      {
+        id: "m2",
+        title: "Pasivo y patrimonio",
+        idea: "El pasivo es corriente si se liquida pronto o si la entidad no puede aplazar el pago. El patrimonio es lo que queda como situación neta.",
+        fig: "l3m2",
+        cap: "Ilustración original. Dos magnitudes distintas dejan ver una situación neta, como la diferencia que define el patrimonio.",
+        blocks: [
+          { t: "p", x: "La clase 2 ordena obligaciones presentes que suponen una salida de recursos y nacen de sucesos pasados. Incluye el grupo 21, pasivos corrientes, y el 22, no corrientes. El saldo de la clase es crédito." },
+          { t: "p", x: "Un pasivo es corriente si cumple alguno de estos criterios: se espera liquidar en el ciclo normal de operación; se mantiene sobre todo para negociar; debe liquidarse en los doce meses desde la fecha de los estados; o la entidad no tiene un derecho incondicional para aplazar la cancelación durante al menos los doce meses siguientes a la fecha sobre la que se informa." },
+          { t: "p", x: "El grupo 21 se compone de 2101 Cuentas por pagar, 2102 Deuda pública a corto plazo, 2103 Fondos de terceros y 2104 Provisiones. Su saldo es crédito." },
+          { t: "p", x: "El pasivo no corriente vence después de los doce meses de la fecha de presentación de los últimos estados financieros. El grupo 22 incluye 2201 Cuentas por pagar a largo plazo, 2202 Deuda pública a largo plazo y 2203 Provisiones a largo plazo." },
+          { t: "h", x: "Clase 3. Patrimonio" },
+          { t: "p", x: "Reúne la situación financiera neta de la entidad: la diferencia entre activos y pasivos después de añadir otros recursos y deducir otras obligaciones reconocidas en el estado de situación financiera. Está compuesto por el grupo 31 Activos netos/Patrimonio. La naturaleza del saldo es crédito." },
+          { t: "p", x: "Ese grupo incorpora los recursos destinados a crear y desarrollar las entidades y las variaciones patrimoniales del resultado del periodo, ahorro o desahorro. Sus subgrupos son 3101 Hacienda pública, 3102 Hacienda pública adicional, 3103 Reservas y 3104 Resultados." }
+        ],
+        activity: {
+          prompt: "Una obligación vence en ocho meses y la entidad no puede aplazarla. ¿Cómo se clasifica?",
+          options: [
+            "Pasivo no corriente, porque ocho meses es casi un año.",
+            "Pasivo corriente: basta con que deba liquidarse dentro de los doce meses, o con que no exista derecho a aplazarla.",
+            "Patrimonio, porque reduce la hacienda pública."
+          ],
+          answer: 1,
+          why: "La lectura no exige que se cumplan todos los criterios a la vez: alcanza con uno. Liquidarse dentro de los doce meses ya la hace corriente. También la hace corriente no tener un derecho incondicional para aplazar la cancelación. El no corriente se reserva al vencimiento posterior a esos doce meses."
+        }
+      },
+      {
+        id: "m3",
+        title: "Ingresos, gastos y costos",
+        idea: "Hay ingreso sin entregar algo equivalente a cambio, e ingreso que sí nace de esa entrega. El gasto consume; el costo mide lo vendido.",
+        blocks: [
+          { t: "p", x: "La clase 4 son entradas brutas de beneficios económicos o potenciales de servicio del periodo que aumentan la situación financiera neta, distintas de las aportaciones de los propietarios. La forman el grupo 41, ingresos sin contraprestación, y el 42, ingresos con contraprestación." },
+          { t: "h", x: "Sin contraprestación" },
+          { t: "p", x: "La entidad los devenga sin entregar directamente un valor aproximadamente igual a cambio. El caso típico son los gravámenes de las leyes y regulaciones. También entran transferencias, contribuciones a la seguridad social y otras transacciones sin contraprestación, además de las cuentas de incentivos y exoneraciones." },
+          { t: "p", x: "La lectura compone el grupo con 4101 Impuestos, 4102 Transferencias, 4103 Contribuciones a la seguridad social, 4104 Incentivos y exoneraciones de ingresos sin contraprestación, 4105 y 4106 —ambos descritos aquí como excesos de provisiones a largo plazo y reversiones de deterioros de activos no corrientes— y 4199 Otros ingresos sin contraprestación." },
+          { t: "h", x: "Con contraprestación" },
+          { t: "p", x: "Aquí la entidad sí entrega directamente un valor aproximadamente igual: servicios, concesiones, tasas, venta de bienes, participación en utilidades de empresas públicas o de economía mixta, y otras transacciones con contraprestación. También se registran los descuentos ligados a servicios y ventas." },
+          { t: "pairs", rows: [
+            ["4201", "Prestación de servicios"],
+            ["4202", "Concesiones"],
+            ["4203", "Tasa y contribuciones"],
+            ["4204", "Venta de bienes"],
+            ["4205", "Descuentos en ingresos con contraprestación"],
+            ["4206", "Ingresos por disposición de activos"],
+            ["4207", "Participación en utilidades de empresas"],
+            ["4208", "Ingresos financieros"],
+            ["4209", "Regalías"],
+            ["4210", "Ingresos por valoración de activos y pasivos financieros"]
+          ]},
+          { t: "p", x: "Esos subgrupos tienen saldo crédito, excepto 4205 Descuentos en ingresos con contraprestación." },
+          { t: "h", x: "Clase 5. Gastos y costos" },
+          { t: "p", x: "Los gastos son salidas que disminuyen la situación financiera neta, distintas de las distribuciones a los propietarios. Los costos se asocian a adquirir o producir bienes y a prestar servicios. Los grupos son 51 Gastos y 52 Costos. El saldo de la clase es débito." },
+          { t: "p", x: "El grupo 51 son gastos devengados por el consumo de bienes y servicios usados en las operaciones. La lectura integra gastos de personal (5101), servicios de terceros (5102), consumo de bienes corrientes (5103), transferencias (5104), prestaciones de la seguridad social (5105), gastos financieros (5106), impuestos (5107), devoluciones de impuestos de períodos anteriores (5108) y gastos por valoración (5109). Sigue con disposición de activos, provisiones, provisiones no corrientes, baja de bienes, amortización, agotamiento y deterioro de activos corrientes y no corrientes (5110 a 5117). Su saldo es débito." },
+          { t: "p", x: "El grupo 52 representa el valor de las adquisiciones de mercancía y el costo de venta de los productos terminados. Lo integra el subgrupo 5201 Costo de venta, de saldo débito. Dentro de él, la lectura detalla cuentas como productos agropecuarios, avícolas, apícolas, acuícolas, artesanales, impresos y publicaciones, muebles y enseres, productos químicos, textiles y vestuario, materiales de construcción, alimentos y bebidas, placas vehiculares, productos de árboles y corteza, y otras mercancías vendidas." },
+          { t: "p", x: "Esas cuentas de costo se debitan por el costo de la mercadería vendida y de los productos vendidos. Se acreditan por las devoluciones de bienes vendidos y por el saldo al cerrar el periodo." }
+        ],
+        activity: {
+          prompt: "¿Por qué 4205 no sigue la naturaleza del resto del grupo 42?",
+          options: [
+            "Porque la lectura exceptúa los descuentos en ingresos con contraprestación: los demás subgrupos tienen saldo crédito.",
+            "Porque 4205 es un pasivo no corriente.",
+            "Porque todos los ingresos, sin excepción, tienen saldo débito."
+          ],
+          answer: 0,
+          why: "El grupo 42 devenga ingresos al entregar un valor aproximadamente igual a cambio, y sus subgrupos tienen saldo crédito. La lectura deja fuera de esa naturaleza a 4205, que registra los descuentos concedidos en servicios y ventas de bienes."
+        }
+      },
+      {
+        id: "m4",
+        title: "La clase 9, del presupuesto a la situación financiera",
+        idea: "Una cosa es anotar la ejecución del presupuesto y otra pasar ese efecto a las cuentas financieras. La clase 9 hace las dos, y al final cierra el ejercicio.",
+        fig: "l3m4",
+        cap: "Ilustración original. Dos registros enlazados, como el asiento simultáneo de las aplicaciones presupuestarias.",
+        blocks: [
+          { t: "p", x: "La clase 9 muestra la ejecución presupuestaria de ingresos y gastos, el paso de esas cifras a la situación financiera, los compromisos y el resultado del presupuesto anual. Sus grupos son 91 Ejecución presupuestaria, 92 Aplicaciones y compromisos presupuestarios, y 93 Resultado de la ejecución presupuestaria." },
+          { t: "h", x: "Grupo 91. Ejecutar" },
+          { t: "p", x: "9101 es la ejecución de ingresos y tiene saldo crédito. 9102 es la ejecución de gastos y tiene saldo débito. Cada entidad informa además con los códigos de partidas del presupuesto aprobado para esa vigencia fiscal." },
+          { t: "p", x: "En ingresos, las cuentas de mayor separan Gobierno Central (910101), instituciones independientes (910102), instituciones descentralizadas (910103) y gobiernos locales (910104). Se acreditan por los ingresos presupuestarios recaudados. Se debitan por ajustes sustentados durante el periodo y por el saldo crédito al cierre." },
+          { t: "p", x: "En gastos, la misma división institucional usa 910201 a 910204. El saldo es débito. Se debitan por los gastos comprometidos en cuentas directas y por los compromisos de órdenes de compra y contratos. Se acreditan por la anulación de documentos fuente, por los compromisos no devengados al final del ejercicio y por el saldo débito al cierre." },
+          { t: "h", x: "Grupo 92. Pasar el efecto y anotar el compromiso" },
+          { t: "p", x: "Este grupo traslada a la situación financiera el efecto de la ejecución y registra los compromisos. 9201, aplicaciones de ingresos, tiene saldo débito. 9202, aplicaciones de gastos, y 9203, compromisos de gastos, tienen saldo crédito." },
+          { t: "p", x: "9201 registra ese efecto en las cuentas financieras mediante el asiento simultáneo. Incluye 920101 Ingresos corrientes presupuestarios aplicados y 920102 Ingresos de capital presupuestarios aplicados. Se debita por lo recaudado; se acredita por ajustes sustentados y por el saldo al cierre." },
+          { t: "p", x: "9202 hace lo propio con el gasto: 920201 Gastos corrientes presupuestarios aplicados y 920202 Gastos de capital presupuestarios aplicados. Su saldo es crédito. Se debita por anulaciones de documentos de cuentas directas; se acredita por las recepciones de bienes o servicios, también cuando llegan por cuentas directas." },
+          { t: "p", x: "9203 registra compromisos según el valor de los documentos de afectación presupuestaria: 920301 Órdenes de compra y 920302 Contrato. El saldo es crédito. Se acredita al comprometer la orden o el contrato. Se debita cuando se reciben los bienes o servicios, cuando se anulan documentos y por los compromisos no devengados al cierre." },
+          { t: "h", x: "Grupo 93. Cerrar" },
+          { t: "p", x: "Sirve para registrar, al final de cada periodo, los cierres de la ejecución de ingresos y de gastos. Sus subgrupos son 9301 Resultado del presupuesto y 9302 Liquidación de aplicaciones presupuestarias. El saldo de esos subgrupos puede ser débito o crédito." },
+          { t: "p", x: "Así, la clase 9 no reemplaza al activo ni al ingreso: muestra cómo el presupuesto se ejecuta, cómo ese efecto entra en la situación financiera y cómo se cierra. El plan, del que esta clase forma parte, sigue siendo el instrumento para identificar, resumir y reconocer las operaciones públicas." }
+        ],
+        activity: {
+          prompt: "Se recauda un ingreso presupuestario durante el periodo. En 9101, ¿qué corresponde?",
+          options: [
+            "Acreditar el importe recaudado. El débito de esta cuenta es para ajustes sustentados o para su saldo crédito al cierre.",
+            "Debitarlo como si 9101 fuera un gasto comprometido.",
+            "Anotarlo solo en 9203, porque toda recaudación es un contrato."
+          ],
+          answer: 0,
+          why: "La lectura dice que las cuentas de 9101 tienen saldo crédito y se acreditan por los ingresos presupuestarios recaudados. Se debitan por ajustes sustentados y por el saldo crédito al cerrar el ejercicio. 9203 es otra cosa: compromisos de órdenes de compra y contratos, no la recaudación."
+        }
+      }
+    ],
+    quiz: [
+      { k: "vf", q: "Los dígitos y los conceptos del plan los determina la Contraloría General de la República.", options: ["Verdadero", "Falso"], a: 0, why: "La lectura lo dice al recordar la clasificación decimal: la Contraloría es el órgano rector del sistema de contabilidad gubernamental y fija dígitos y conceptos." },
+      { k: "mc", q: "El efectivo que puede usarse para cancelar un pasivo dentro de los doce meses siguientes, sin restricción, se incluye en…", options: ["Activos no corrientes, por ser dinero.", "Activos corrientes.", "Pasivos corrientes.", "Costo de venta."], a: 1, why: "El grupo 11 incluye el efectivo o equivalente cuya utilización no está restringida para intercambiarlo o usarlo para cancelar un pasivo, al menos dentro de los doce meses siguientes a la fecha de los estados. El grupo 12 es el uso duradero o el vencimiento posterior a esos doce meses." },
+      { k: "vf", q: "El grupo 12 de esta lectura incluye, entre otros, bienes históricos y culturales, activos intangibles y recursos naturales y medioambientales.", options: ["Verdadero", "Falso"], a: 0, why: "Además de inversiones y cuentas por cobrar de largo plazo, propiedades de inversión y propiedades, planta y equipo, el grupo 12 lista 1205 bienes históricos y culturales, 1206 intangibles, 1207 activos concesionados, 1208 activos biológicos y 1209 recursos naturales y medioambientales." },
+      { k: "mc", q: "¿Cuándo clasifica esta lectura un pasivo como no corriente?", options: ["Cuando se espera liquidarlo en el ciclo normal de operación.", "Cuando la entidad no puede aplazar el pago.", "Cuando el vencimiento es posterior a los doce meses de la fecha de presentación de los últimos estados financieros.", "Cuando se mantiene fundamentalmente para negociar."], a: 2, why: "Esos otros tres criterios —ciclo de operación, negociación y falta de derecho a aplazar, además del plazo de doce meses para liquidarlo— sirven para clasificarlo como corriente. El no corriente es el que vence después de los doce meses de la presentación de los últimos estados." },
+      { k: "vf", q: "El patrimonio representa la situación financiera neta: activos menos pasivos, después de añadir otros recursos y deducir otras obligaciones reconocidas.", options: ["Verdadero", "Falso"], a: 0, why: "Así define la lectura la clase 3. El grupo 31 tiene saldo crédito y recoge los recursos para crear y desarrollar la entidad y el ahorro o desahorro del periodo, en hacienda pública, hacienda pública adicional, reservas y resultados." },
+      { k: "mc", q: "Un ingreso sin contraprestación se reconoce cuando la entidad…", options: ["Entrega directamente un valor aproximadamente igual a cambio.", "Lo devenga sin entregar directamente un valor aproximadamente igual, como ocurre con los gravámenes.", "Solo vende bienes terminados.", "Registra el costo de la mercadería vendida."], a: 1, why: "El grupo 41 es el ingreso sin entregar un valor aproximadamente igual: impuestos y otros tributos, transferencias, contribuciones a la seguridad social e incentivos y exoneraciones. Entregar un valor equivalente corresponde al grupo 42." },
+      { k: "vf", q: "Todos los subgrupos de ingresos con contraprestación tienen saldo crédito, sin ninguna excepción.", options: ["Verdadero", "Falso"], a: 1, why: "La lectura dice que los subgrupos del grupo 42 tienen saldo crédito, excepto 4205 Descuentos en ingresos con contraprestación. Esa cuenta registra descuentos en servicios y ventas." },
+      { k: "mc", q: "El grupo 52 se debita, según esta lectura, por…", options: ["El costo de la mercadería vendida y de los productos vendidos.", "Las devoluciones de bienes vendidos.", "Las órdenes de compra todavía no recibidas.", "El cierre de la hacienda pública inicial."], a: 0, why: "52 está integrado por 5201 Costo de venta, de saldo débito. Se debita por el costo de lo vendido. Las devoluciones de bienes vendidos y el saldo final del periodo van al crédito, no al débito." },
+      { k: "vf", q: "9101 se acredita por los ingresos presupuestarios recaudados, y el subgrupo de ejecución de gastos tiene saldo débito.", options: ["Verdadero", "Falso"], a: 0, why: "9101, ejecución de ingresos, es de naturaleza crédito y se acredita por lo recaudado. 9102, ejecución de gastos, es de naturaleza débito y se carga por lo comprometido en cuentas directas, órdenes de compra y contratos." },
+      { k: "mc", q: "Los subgrupos del grupo 93, Resultado del presupuesto y Liquidación de aplicaciones presupuestarias, tienen saldo…", options: ["Solo débito, como el activo.", "Solo crédito, como el pasivo.", "Débito o crédito.", "No se usan al cierre del periodo."], a: 2, why: "El grupo 93 registra los cierres de la ejecución de ingresos y de gastos al final de cada periodo. La lectura dice que sus subgrupos, 9301 y 9302, tienen saldo de naturaleza débito o crédito." }
+    ]
   }
+];
+
+let view = { name: "menu" };
+let progress = {};
+
+function emptyProgress() {
+  return { done: {}, picks: {}, quiz: { step: 0, picks: {}, revealed: false, finished: false, score: null } };
 }
-function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
-function fig(name) {
-  return `<div class="figure">${FIGS[name]}<p class="cap">Ilustración original de la lección.</p></div>`;
+function loadAll() {
+  progress = {};
+  READINGS.forEach((r) => {
+    try {
+      const raw = localStorage.getItem(storeKey(r.id));
+      progress[r.id] = raw ? JSON.parse(raw) : emptyProgress();
+      if (!progress[r.id].quiz) progress[r.id].quiz = emptyProgress().quiz;
+    } catch (e) {
+      progress[r.id] = emptyProgress();
+    }
+  });
 }
-function listHtml(items) {
-  if (!items) return "";
-  return `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`;
+function save(id) {
+  try { localStorage.setItem(storeKey(id), JSON.stringify(progress[id])); } catch (e) {}
 }
-function paras(arr) {
-  return (arr || []).map((p) => `<p>${esc(p)}</p>`).join("");
+function readingById(id) { return READINGS.find((r) => r.id === id); }
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const btn = document.getElementById("btn-theme");
+  if (btn) btn.textContent = theme === "dark" ? "Modo claro" : "Modo oscuro";
+  try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
 }
-function progressOf(id) {
-  const rec = R[id];
-  const st = state[id];
-  const done = rec.modules.filter((_, i) => st.a[i]).length;
-  const answered = st.q && st.q.picks ? Object.keys(st.q.picks).length : 0;
-  const finished = answered === rec.quiz.length;
-  return { done, total: rec.modules.length, answered, finished, score: finished ? scoreOf(id) : null };
+function initTheme() {
+  let theme = null;
+  try { theme = localStorage.getItem(THEME_KEY); } catch (e) {}
+  if (theme !== "light" && theme !== "dark") {
+    theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  applyTheme(theme);
 }
-function scoreOf(id) {
-  const st = state[id].q;
-  if (!st) return 0;
-  return R[id].quiz.reduce((n, item, i) => n + (st.picks[i] === item.ok ? 1 : 0), 0);
+
+function el(tag, attrs, children) {
+  const node = document.createElement(tag);
+  if (attrs) Object.entries(attrs).forEach(([k, v]) => {
+    if (k === "class") node.className = v;
+    else if (k === "html") node.innerHTML = v;
+    else if (k.startsWith("on") && typeof v === "function") node.addEventListener(k.slice(2).toLowerCase(), v);
+    else if (v !== null && v !== undefined) node.setAttribute(k, v);
+  });
+  (children || []).forEach((c) => {
+    if (c == null) return;
+    node.append(c.nodeType ? c : document.createTextNode(c));
+  });
+  return node;
 }
-function route() {
-  const h = (location.hash || "").replace(/^#/, "");
-  if (!h) return { view: "home" };
-  const p = h.split("/");
-  if (!R[p[0]]) return { view: "home" };
-  if (p[1] === "m") return { view: "module", id: p[0], n: Math.max(0, parseInt(p[2], 10) || 0) };
-  if (p[1] === "quiz") return { view: "quiz", id: p[0] };
-  return { view: "reading", id: p[0] };
+function p(text) { return el("p", null, [text]); }
+
+function fig(id, cap) {
+  return el("figure", { class: "fig" }, [
+    el("div", { html: SVG[id] }),
+    el("figcaption", null, [cap])
+  ]);
 }
-function go(h) {
-  const next = h ? "#" + h : "";
-  if (location.hash === next || (!h && (location.hash === "" || location.hash === "#"))) {
-    render();
+
+function renderBlocks(blocks) {
+  const wrap = el("div", { class: "prose" });
+  blocks.forEach((b) => {
+    if (b.t === "p") wrap.append(p(b.x));
+    else if (b.t === "h") wrap.append(el("h3", null, [b.x]));
+    else if (b.t === "ul") {
+      const ul = el("ul", { class: "clean" });
+      b.items.forEach((item) => ul.append(el("li", null, [item])));
+      wrap.append(ul);
+    } else if (b.t === "pairs") {
+      const box = el("div", { class: "pairs" });
+      b.rows.forEach(([code, name]) => {
+        box.append(el("div", { class: "pair" }, [el("b", null, [code]), el("span", null, [name])]));
+      });
+      wrap.append(box);
+    }
+  });
+  return wrap;
+}
+
+function moduleCountDone(r) {
+  const pr = progress[r.id];
+  return r.modules.filter((m) => pr.done[m.id]).length;
+}
+
+function renderMenu() {
+  const app = document.getElementById("app");
+  app.replaceChildren();
+  app.append(
+    el("p", { class: "kicker" }, ["Unidad 1"]),
+    el("p", { class: "hero-prof" }, ["Profesor Sergio Tertusio"]),
+    el("h1", null, ["Contabilidad gubernamental"]),
+    el("p", { class: "lede" }, ["Tres lecturas sobre el Manual General de Contabilidad Gubernamental y su Plan General de Cuentas. El avance de cada una se guarda por separado."])
+  );
+  const grid = el("div", { class: "grid cards" });
+  READINGS.forEach((r) => {
+    const done = moduleCountDone(r);
+    const q = progress[r.id].quiz;
+    const totalSteps = r.modules.length + 1;
+    const completeUnits = done + (q.finished ? 1 : 0);
+    const pct = Math.round((completeUnits / totalSteps) * 100);
+    let status = done + " de " + r.modules.length + " módulos";
+    if (q.finished) status += " · cuestionario " + q.score + "/10";
+    else if (q.step > 0 || q.revealed) status += " · cuestionario en curso";
+    else status += " · cuestionario sin iniciar";
+    const btn = el("button", { class: "card", type: "button", onClick: () => openReading(r.id) }, [
+      el("p", { class: "kicker" }, [r.n]),
+      el("h2", null, [r.title]),
+      el("p", null, [r.blurb]),
+      el("p", { class: "meta" }, [status]),
+      el("div", { class: "bar" }, [el("span", { style: "width:" + pct + "%" })])
+    ]);
+    grid.append(btn);
+  });
+  app.append(grid);
+}
+
+function openReading(id) {
+  view = { name: "reading", id };
+  render();
+}
+function openModule(id, mid) {
+  view = { name: "module", id, mid };
+  render();
+}
+function openQuiz(id) {
+  view = { name: "quiz", id };
+  render();
+}
+
+function renderReading() {
+  const r = readingById(view.id);
+  const app = document.getElementById("app");
+  app.replaceChildren();
+  app.append(
+    el("p", { class: "kicker" }, ["Unidad 1 · " + r.n]),
+    el("h1", null, [r.title]),
+    el("p", { class: "lede" }, [r.blurb]),
+    fig(r.cover, r.coverCap)
+  );
+  const list = el("div", { class: "grid" });
+  r.modules.forEach((m, i) => {
+    const ready = progress[r.id].done[m.id];
+    list.append(el("button", { class: "card", type: "button", onClick: () => openModule(r.id, m.id) }, [
+      el("p", { class: "kicker" }, ["Módulo " + (i + 1) + (ready ? " · listo" : "")]),
+      el("h2", null, [m.title])
+    ]));
+  });
+  const q = progress[r.id].quiz;
+  list.append(el("button", { class: "card", type: "button", onClick: () => openQuiz(r.id) }, [
+    el("p", { class: "kicker" }, ["Cierre"]),
+    el("h2", null, ["Cuestionario"]),
+    el("p", null, [q.finished ? ("Último resultado: " + q.score + " de 10.") : "Diez preguntas de esta lectura, entre opción múltiple y verdadero o falso."])
+  ]));
+  app.append(list);
+  const src = el("div", { class: "sources" });
+  src.append(p("Fuentes de la lectura"));
+  BIB.forEach((line) => src.append(p(line)));
+  app.append(src);
+}
+
+function renderModule() {
+  const r = readingById(view.id);
+  const m = r.modules.find((x) => x.id === view.mid);
+  const idx = r.modules.findIndex((x) => x.id === view.mid);
+  const pr = progress[r.id];
+  const app = document.getElementById("app");
+  app.replaceChildren();
+  app.append(
+    el("p", { class: "kicker" }, [r.n + " · Módulo " + (idx + 1) + " de " + r.modules.length]),
+    el("h1", null, [m.title]),
+    el("p", { class: "idea" }, [m.idea])
+  );
+  if (m.fig) app.append(fig(m.fig, m.cap));
+  app.append(renderBlocks(m.blocks));
+  app.append(el("h2", null, ["Actividad"]));
+  app.append(p(m.activity.prompt));
+  const picked = Object.prototype.hasOwnProperty.call(pr.picks, m.id) ? pr.picks[m.id] : null;
+  const opts = el("div", { class: "opts" });
+  m.activity.options.forEach((text, i) => {
+    const chosen = picked === i;
+    const show = picked !== null;
+    let cls = "opt";
+    if (show && i === m.activity.answer) cls += " good";
+    else if (show && chosen && i !== m.activity.answer) cls += " bad";
+    const b = el("button", {
+      class: cls,
+      type: "button",
+      disabled: show ? "true" : null,
+      "aria-pressed": chosen ? "true" : "false"
+    }, [text]);
+    if (!show) b.addEventListener("click", () => {
+      pr.picks[m.id] = i;
+      pr.done[m.id] = true;
+      save(r.id);
+      render();
+    });
+    opts.append(b);
+  });
+  app.append(opts);
+  if (picked !== null) {
+    const ok = picked === m.activity.answer;
+    app.append(el("div", { class: "feedback " + (ok ? "good" : "bad") }, [
+      el("strong", null, [ok ? "Correcto" : "Incorrecto"]),
+      p(m.activity.why)
+    ]));
+  }
+  const nav = el("div", { class: "navline" });
+  nav.append(el("button", { class: "btn", type: "button", onClick: () => openReading(r.id) }, ["Volver a la lectura"]));
+  if (idx < r.modules.length - 1) {
+    const next = r.modules[idx + 1];
+    nav.append(el("button", { class: "btn primary", type: "button", onClick: () => openModule(r.id, next.id) }, ["Siguiente módulo"]));
+  } else {
+    nav.append(el("button", { class: "btn primary", type: "button", onClick: () => openQuiz(r.id) }, ["Ir al cuestionario"]));
+  }
+  app.append(nav);
+}
+
+function renderQuiz() {
+  const r = readingById(view.id);
+  const pr = progress[r.id];
+  const qz = pr.quiz;
+  const app = document.getElementById("app");
+  app.replaceChildren();
+  app.append(el("p", { class: "kicker" }, [r.n + " · Cuestionario"]));
+  if (qz.finished) {
+    app.append(el("h1", null, ["Resultado"]));
+    app.append(el("p", { class: "score" }, [qz.score + " / 10"]));
+    let msg = "Varias ideas de esta lectura todavía se confunden. Conviene releer los módulos y reintentar.";
+    if (qz.score >= 9) msg = "El resultado muestra que distinguiste las ideas centrales de esta lectura.";
+    else if (qz.score >= 7) msg = "Hay una base clara. Revisa las que fallaron con el texto de los módulos.";
+    app.append(p(msg));
+    const review = el("div", { class: "review" });
+    r.quiz.forEach((item, i) => {
+      const pick = qz.picks[i];
+      const ok = pick === item.a;
+      review.append(el("article", null, [
+        el("strong", null, [(ok ? "Correcta. " : "Incorrecta. ") + "Pregunta " + (i + 1)]),
+        p(item.q),
+        p(item.why)
+      ]));
+    });
+    app.append(review);
+    app.append(el("div", { class: "navline" }, [
+      el("button", { class: "btn primary", type: "button", onClick: () => retryQuiz(r.id) }, ["Reintentar"]),
+      el("button", { class: "btn", type: "button", onClick: () => openReading(r.id) }, ["Volver a la lectura"])
+    ]));
     return;
   }
-  location.hash = h;
-}
-function render() {
-  const r = route();
-  const app = document.getElementById("app");
-  if (r.view === "home") app.innerHTML = viewHome();
-  else if (r.view === "reading") app.innerHTML = viewReading(r.id);
-  else if (r.view === "module") app.innerHTML = viewModule(r.id, r.n);
-  else app.innerHTML = viewQuiz(r.id);
-  app.querySelectorAll("[data-go]").forEach((b) => {
-    b.addEventListener("click", () => go(b.getAttribute("data-go")));
-  });
-  app.querySelectorAll("[data-act]").forEach((b) => {
-    b.addEventListener("click", () => {
-      const id = b.getAttribute("data-id");
-      const n = b.getAttribute("data-n");
-      const pick = Number(b.getAttribute("data-act"));
-      if (state[id].a[n]) return;
-      const ok = R[id].modules[n].act.ok;
-      state[id].a[n] = { pick, right: pick === ok };
-      save();
-      render();
-    });
-  });
-  app.querySelectorAll("[data-quiz]").forEach((b) => {
-    b.addEventListener("click", () => {
-      const id = b.getAttribute("data-id");
-      const qi = Number(b.getAttribute("data-qi"));
-      const oi = Number(b.getAttribute("data-quiz"));
-      const q = state[id].q;
-      if (q.picks[qi] != null) return;
-      q.picks[qi] = oi;
-      save();
-      render();
-    });
-  });
-  app.querySelectorAll("[data-qnav]").forEach((b) => {
-    b.addEventListener("click", () => {
-      const id = b.getAttribute("data-id");
-      state[id].q.i = Number(b.getAttribute("data-qnav"));
-      save();
-      render();
-    });
-  });
-  const retry = app.querySelector("[data-retry]");
-  if (retry) {
-    retry.addEventListener("click", () => {
-      const id = retry.getAttribute("data-retry");
-      state[id].q = { i: 0, picks: {} };
-      save();
-      render();
-    });
-  }
-  window.scrollTo(0, 0);
-}
-function viewHome() {
-  const cards = Object.keys(R).map((id) => {
-    const rec = R[id];
-    const p = progressOf(id);
-    const pct = Math.round(((p.done / p.total) * 0.7 + (p.finished ? 0.3 : (p.answered / rec.quiz.length) * 0.3)) * 100);
-    const quizTxt = p.finished ? `Cuestionario ${p.score} de 10` : (p.answered ? `Cuestionario en curso (${p.answered} de 10)` : "Cuestionario sin iniciar");
-    return `<button class="card" type="button" data-go="${id}">
-      ${fig(rec.cover)}
-      <div class="pad">
-        <p class="kicker">${esc(rec.kicker)}</p>
-        <h2>${esc(rec.title)}</h2>
-        <p>${esc(rec.blurb)}</p>
-        <div class="bar" aria-hidden="true"><span style="width:${pct}%"></span></div>
-        <p class="muted">${p.done} de ${p.total} módulos · ${esc(quizTxt)}</p>
-      </div>
-    </button>`;
-  }).join("");
-  return `<p class="kicker">Unidad 1</p>
-    <h1>Profesor Sergio Tertusio</h1>
-    <p class="lead">Tres lecturas para comprender cómo se planifica un encargo: las normas, la estrategia y el detalle, y el memorándum que los deja por escrito. El avance de cada lectura se guarda aparte.</p>
-    <div class="grid">${cards}</div>`;
-}
-function viewReading(id) {
-  const rec = R[id];
-  const p = progressOf(id);
-  const mods = rec.modules.map((m, i) => {
-    const done = !!state[id].a[i];
-    return `<button class="mod${done ? " done" : ""}" type="button" data-go="${id}/m/${i}">
-      <span class="num">${done ? "✓" : i + 1}</span>
-      <span><strong>${esc(m.title)}</strong><br><span class="muted">${done ? "Actividad hecha" : "Lectura y actividad breve"}</span></span>
-    </button>`;
-  }).join("");
-  const quizLabel = p.finished ? `Cuestionario · ${p.score} de 10` : "Cuestionario de 10 preguntas";
-  return `${fig(rec.cover)}
-    <p class="kicker">${esc(rec.kicker)}</p>
-    <h2>${esc(rec.title)}</h2>
-    <p>${esc(rec.intro)}</p>
-    <div class="panel" style="box-shadow:none;margin-top:1rem">
-      ${mods}
-      <button class="mod" type="button" data-go="${id}/quiz"><span class="num">Q</span><span><strong>${esc(quizLabel)}</strong><br><span class="muted">Opción múltiple y verdadero o falso, con explicación al momento</span></span></button>
-    </div>`;
-}
-function block(title, items) {
-  if (!items) return "";
-  return `${title ? `<h3>${esc(title)}</h3>` : ""}${listHtml(items)}`;
-}
-function viewModule(id, n) {
-  const rec = R[id];
-  const m = rec.modules[n];
-  if (!m) return viewReading(id);
-  const st = state[id].a[n];
-  const opts = m.act.options.map((o, i) => {
+  const item = r.quiz[qz.step];
+  app.append(el("h1", null, ["Pregunta " + (qz.step + 1) + " de 10"]));
+  app.append(p(item.k === "vf" ? "Verdadero o falso" : "Opción múltiple"));
+  app.append(el("p", { class: "idea" }, [item.q]));
+  const opts = el("div", { class: "opts" });
+  item.options.forEach((text, i) => {
+    const show = qz.revealed;
+    const chosen = qz.picks[qz.step] === i;
     let cls = "opt";
-    if (st) {
-      if (i === m.act.ok) cls += " good";
-      else if (i === st.pick) cls += " bad";
-    }
-    return `<button type="button" class="${cls}" data-act="${i}" data-id="${id}" data-n="${n}" ${st ? "disabled" : ""}>${esc(o)}</button>`;
-  }).join("");
-  const why = st ? `<div class="why ${st.right ? "ok" : "no"}"><strong>${st.right ? "Correcto." : "No es esa."}</strong> ${esc(m.act.why)}</div>` : "";
-  const prev = n > 0 ? `<button type="button" data-go="${id}/m/${n - 1}">Módulo anterior</button>` : "";
-  const next = n < rec.modules.length - 1
-    ? `<button type="button" class="primary" data-go="${id}/m/${n + 1}">Módulo siguiente</button>`
-    : `<button type="button" class="primary" data-go="${id}/quiz">Ir al cuestionario</button>`;
-  return `<p class="kicker">${esc(rec.kicker)} · Módulo ${n + 1} de ${rec.modules.length}</p>
-    <h2>${esc(m.title)}</h2>
-    ${fig(m.fig)}
-    ${paras(m.paras)}
-    ${block(m.listTitle, m.list)}
-    ${m.after ? `<p>${esc(m.after)}</p>` : ""}
-    ${block(m.list2Title, m.list2)}
-    ${m.end ? `<p>${esc(m.end)}</p>` : ""}
-    <div class="panel">
-      <h3>Actividad</h3>
-      <p>${esc(m.act.q)}</p>
-      ${opts}
-      ${why}
-    </div>
-    <div class="row">
-      <button type="button" data-go="${id}">Lista de la lectura</button>
-      ${prev}
-      ${next}
-    </div>`;
-}
-function viewQuiz(id) {
-  const rec = R[id];
-  if (!state[id].q) state[id].q = { i: 0, picks: {} };
-  const qstate = state[id].q;
-  if (qstate.i >= rec.quiz.length) {
-    const score = scoreOf(id);
-    const note = score === 10
-      ? "Las ideas de esta lectura quedaron claras."
-      : score >= 7
-        ? "Hay una base sólida. Conviene releer la explicación de las que no acertaste."
-        : "Conviene volver a los módulos y reintentar el cuestionario con esas ideas a la vista.";
-    return `<p class="kicker">${esc(rec.kicker)} · Cuestionario</p>
-      <h2>Resultado</h2>
-      <p class="score">${score} de 10</p>
-      <p>${esc(note)}</p>
-      <div class="row">
-        <button type="button" class="primary" data-retry="${id}">Reintentar</button>
-        <button type="button" data-go="${id}">Volver a la lectura</button>
-      </div>`;
+    if (show && i === item.a) cls += " good";
+    else if (show && chosen && i !== item.a) cls += " bad";
+    const b = el("button", {
+      class: cls,
+      type: "button",
+      disabled: show ? "true" : null,
+      "aria-pressed": chosen ? "true" : "false"
+    }, [text]);
+    if (!show) b.addEventListener("click", () => {
+      qz.picks[qz.step] = i;
+      qz.revealed = true;
+      save(r.id);
+      render();
+    });
+    opts.append(b);
+  });
+  app.append(opts);
+  if (qz.revealed) {
+    const ok = qz.picks[qz.step] === item.a;
+    app.append(el("div", { class: "feedback " + (ok ? "good" : "bad") }, [
+      el("strong", null, [ok ? "Correcto" : "Incorrecto"]),
+      p(item.why)
+    ]));
+    const label = qz.step === r.quiz.length - 1 ? "Ver resultado" : "Siguiente";
+    app.append(el("div", { class: "navline" }, [
+      el("button", { class: "btn primary", type: "button", onClick: () => advanceQuiz(r) }, [label])
+    ]));
   }
-  const item = rec.quiz[qstate.i];
-  const picked = qstate.picks[qstate.i];
-  const opts = item.options.map((o, i) => {
-    let cls = "opt";
-    if (picked != null) {
-      if (i === item.ok) cls += " good";
-      else if (i === picked) cls += " bad";
-    }
-    return `<button type="button" class="${cls}" data-quiz="${i}" data-qi="${qstate.i}" data-id="${id}" ${picked != null ? "disabled" : ""}>${esc(o)}</button>`;
-  }).join("");
-  const why = picked == null ? "" : `<div class="why ${picked === item.ok ? "ok" : "no"}"><strong>${picked === item.ok ? "Correcto." : "No es esa."}</strong> ${esc(item.why)}</div>`;
-  const prev = qstate.i > 0 ? `<button type="button" data-qnav="${qstate.i - 1}" data-id="${id}">Anterior</button>` : "";
-  const next = picked == null ? "" : (
-    qstate.i < rec.quiz.length - 1
-      ? `<button type="button" class="primary" data-qnav="${qstate.i + 1}" data-id="${id}">Siguiente</button>`
-      : `<button type="button" class="primary" data-qnav="${rec.quiz.length}" data-id="${id}">Ver resultado</button>`
-  );
-  return `<p class="kicker">${esc(rec.kicker)} · Pregunta ${qstate.i + 1} de 10</p>
-    <h2>${esc(item.q)}</h2>
-    ${opts}
-    ${why}
-    <div class="row">${prev}${next}<button type="button" data-go="${id}">Volver a la lectura</button></div>`;
 }
 
-function applyTheme(t) {
-  document.documentElement.setAttribute("data-theme", t);
-  localStorage.setItem(THEME, t);
-  const btn = document.getElementById("theme");
-  const dark = t === "dark";
-  btn.textContent = dark ? "Modo oscuro" : "Modo claro";
-  btn.setAttribute("aria-pressed", dark ? "true" : "false");
-  btn.setAttribute("aria-label", dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+function advanceQuiz(r) {
+  const qz = progress[r.id].quiz;
+  if (qz.step >= r.quiz.length - 1) {
+    let score = 0;
+    r.quiz.forEach((item, i) => { if (qz.picks[i] === item.a) score += 1; });
+    qz.finished = true;
+    qz.score = score;
+    qz.revealed = false;
+  } else {
+    qz.step += 1;
+    qz.revealed = qz.picks[qz.step] !== undefined;
+  }
+  save(r.id);
+  render();
 }
-const savedTheme = localStorage.getItem(THEME);
-applyTheme(savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
-document.getElementById("theme").addEventListener("click", () => {
-  applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+function retryQuiz(id) {
+  progress[id].quiz = { step: 0, picks: {}, revealed: false, finished: false, score: null };
+  save(id);
+  render();
+}
+
+function render() {
+  if (view.name === "menu") renderMenu();
+  else if (view.name === "reading") renderReading();
+  else if (view.name === "module") renderModule();
+  else if (view.name === "quiz") renderQuiz();
+  window.scrollTo(0, 0);
+}
+
+function resetAll() {
+  READINGS.forEach((r) => {
+    progress[r.id] = emptyProgress();
+    try { localStorage.removeItem(storeKey(r.id)); } catch (e) {}
+  });
+  document.getElementById("modal").hidden = true;
+  view = { name: "menu" };
+  render();
+}
+
+document.getElementById("btn-menu").addEventListener("click", () => {
+  document.getElementById("modal").hidden = true;
+  view = { name: "menu" };
+  render();
 });
-document.getElementById("menu").addEventListener("click", () => go(""));
-document.getElementById("reset").addEventListener("click", () => document.getElementById("dlg").showModal());
-document.getElementById("dlg-no").addEventListener("click", () => document.getElementById("dlg").close());
-document.getElementById("dlg-yes").addEventListener("click", () => {
-  localStorage.removeItem(KEY);
-  state = blank();
-  document.getElementById("dlg").close();
-  go("");
+document.getElementById("btn-theme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyTheme(cur);
 });
-window.addEventListener("hashchange", render);
+document.getElementById("btn-reset").addEventListener("click", () => {
+  document.getElementById("modal").hidden = false;
+});
+document.getElementById("cancel-reset").addEventListener("click", () => {
+  document.getElementById("modal").hidden = true;
+});
+document.getElementById("confirm-reset").addEventListener("click", resetAll);
+
+initTheme();
+loadAll();
 render();
 </script>
 </body>
